@@ -1,0 +1,48 @@
+.container {
+  width: 1000px;
+  height: 710px;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Kanit', sans-serif;
+  margin-top: 44px;
+}
+
+.textContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header__block {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 69px;
+}
+.text {
+  font-weight: bold;
+  font-size: 26px;
+  width: 120px;
+  height: 34px;
+  margin-bottom: 19px;
+  margin-left: 71px;
+  font-family: "Kanit", sans-serif;
+  margin-top:32px;
+  line-height: 33.87px;
+}
+.headerContent {
+  display: flex;
+  flex-direction: row;
+}
+.todoFlexContainer {
+  width: 798px;
+  height: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  margin-right: 70px;
+}

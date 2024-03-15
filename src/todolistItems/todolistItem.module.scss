@@ -1,0 +1,28 @@
+.todoItemContainer{
+  width: 520px;
+  height: fit-content;
+  margin-right: 115px;
+  margin-left: 115px;
+  display: flex;
+  flex-direction: column;
+}
+.todolistsItemsIcons{
+  display: flex;
+  flex-wrap:nowrap;
+  margin-left: 31px;
+  padding-bottom: 20px;
+}
+
+.tasksContainer:not(:last-child) {
+  border-bottom: 1px solid #6C63FF;
+  padding-bottom: 3px;
+}
+.lineActive{
+  text-decoration: line-through;
+}
+
+.editableContainer{
+  display: flex;
+  padding: 20px;
+  flex-grow:1 ;
+}

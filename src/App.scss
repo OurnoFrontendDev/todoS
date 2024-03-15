@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+:root {
+  --bg-dark: #252525;
+  --bg-light: #ffffff;
+  --text-colorLight: #000;
+  --text-colorDark: #F7F7F7;
+  --bgColorLight: #6C63FF;
+  --bgColorLightApp: #F7F7F7;
+  --bgColorDark: #F7F7F7;
+  --imgHeight: 200px;
+  --imgWight: 500px;
+  --imgBgPos: center;
+  --imgBgRep: no-repeat;
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: var(--bgColorLightApp);
+}
+
+.AppLight {
+  background-color: var(--text-colorDark);
+
+}
+
+.AppDark {
+  background-color: var(--bg-dark);
+  color: white;
+}
