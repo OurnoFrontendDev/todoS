@@ -48,14 +48,6 @@ export function HeaderStand(props: HeaderStand) {
             startShake();
             props.setModalActiveAddTask && props.setModalActiveAddTask(true);
         }
-        // if (title.trim() !== "") {
-        //     props.addItem(title);
-        //     setTitle("");
-        // } else {
-        //     setError(true);
-        //     startShake();
-        //     props.setModalActiveAddTask && props.setModalActiveAddTask(true);
-        // }
     }
     const startShake = () => {
         props.Toggle?.(true);

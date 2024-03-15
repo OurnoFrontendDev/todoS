@@ -17,8 +17,6 @@ import DetectiveDark from '../../img/DetectiveDark.svg';
 import {Icon} from '../svg/SvgLoader';
 import useTheme from '../../hooks/useTheme';
 import {ModalError} from "../modals/modalError/ModalError";
-import SliderValueLabel from "@mui/material/Slider/SliderValueLabel";
-import propTypes = SliderValueLabel.propTypes;
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -75,22 +73,18 @@ const Todolist = () => {
 
 
     function changeFilter(value: FilterValuesType) {
-        // действия для изменения фильтрации
         dispatch(changeTodolistFilterAC(value));
     }
 
     function removeTodolist(id: string) {
-        // действия для удаления тудулиста
         dispatch(removeTodolistAC(id));
     }
 
     function changeTodolistTitle(id: string, title: string) {
-        // действия для изменения заголовка тудулиста
         dispatch(changeTodolistTitleAC(id, title));
     }
 
     function addTodolist(title: string) {
-        // действия для добавления нового тудулиста
         dispatch(addTodolistAC(title));
     }
 

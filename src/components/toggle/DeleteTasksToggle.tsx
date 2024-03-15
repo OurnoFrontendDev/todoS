@@ -1,10 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import s from "./toglerStyle.module.scss"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {deleteAllTasks} from "../../state/tasks-reducer";
-import {RootState, useAppSelector} from "../../state/store";
-import {TasksStateType, TodolistType} from "../todolist/Todolist";
-import {ModalAddTasks} from "../modals/modalAddTask/ModalAddTasks";
+import { useAppSelector} from "../../state/store";
 
 type ToggleType = {
     Toggle: (isShake: boolean) => void
@@ -14,7 +12,6 @@ type ToggleType = {
     setErrorModal: (errorModal: boolean) => void
     titleValue: string
 }
-//Если нет тасок, то у тоглера класс shake,
 export const DeleteTasksToggle = (props: ToggleType) => {
     const dispatch = useDispatch()
     const tasks = useAppSelector(state => state.tasks.todos)// из стора таски
