@@ -1,36 +1,43 @@
 import {v1} from 'uuid';
 import {FilterValuesType, TodolistType} from "../components/todolist/Todolist";
 
+const REMOVE_TODOLIST = 'REMOVE-TODOLIST'
+const ADD_TODOLIST = 'ADD-TODOLIST'
+const CHANGE_TODOLIST_TITLE = 'CHANGE-TODOLIST-TITLE'
+const CHANGE_TODOLIST_FILTER = 'CHANGE-TODOLIST-FILTER'
+const INIT_TODO_LIST = 'INIT-TODO-LIST'
 export type RemoveTodolistActionType = {
-    type: 'REMOVE-TODOLIST',
+    type: typeof REMOVE_TODOLIST,
     id: string
 }
 export type AddTodolistActionType = {
-    type: 'ADD-TODOLIST',
+    type: typeof ADD_TODOLIST,
     title: string
     todolistId: string
 }
 export type ChangeTodolistTitleActionType = {
-    type: 'CHANGE-TODOLIST-TITLE',
+    type: typeof CHANGE_TODOLIST_TITLE,
     id: string
     title: string
 }
 export type ChangeTodolistFilterActionType = {
-    type: 'CHANGE-TODOLIST-FILTER',
+    type: typeof CHANGE_TODOLIST_FILTER,
     filter: FilterValuesType
 }
+type initialTodoListType = {
+    type: typeof INIT_TODO_LIST
+    payload: TodolistType[]
+}
 
-type ActionsType = RemoveTodolistActionType | AddTodolistActionType
+type ActionsType =
+    RemoveTodolistActionType
+    | AddTodolistActionType
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
+    | initialTodoListType
 
-export let todolistId1 = v1();
-export let todolistId2 = v1();
+
 const initialState: Array<TodolistType> = []
-// {id: todolistId1, title: "Some title", filter: "all"},
-// {id: todolistId2, title: "Some title 1 ", filter: "all"}
-
-
 export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType): Array<TodolistType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
@@ -48,10 +55,9 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el)
         }
         case 'CHANGE-TODOLIST-FILTER': {
-
-            return state.map(el => ({...el, filter: action .filter}))
+            return state.map(el => ({...el, filter: action.filter}))
         }
-        case 'INIT-TODO-LIST':{
+        case 'INIT-TODO-LIST': {
             return action.payload
         }
         default:

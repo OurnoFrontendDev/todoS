@@ -8,15 +8,15 @@ import {
     removeTodolistAC
 } from '../../state/todolists-reducer';
 import {Counter} from '../counterTasks/Counter';
-import {HeaderStand} from '../header/HeaderStand';
 import {TaskType, TodolistItems} from '../../todolistItems/TodolistItems';
 import style from './todolistStyle.module.scss';
 import {DeleteTasksToggle} from '../toggle/DeleteTasksToggle';
 import DetectiveLight from '../../img/DetectiveLight.svg';
 import DetectiveDark from '../../img/DetectiveDark.svg';
 import {Icon} from '../svg/SvgLoader';
-import useTheme from '../../hooks/useTheme';
+import {useTheme} from '../../hooks/useTheme';
 import {ModalError} from "../modals/modalError/ModalError";
+import {HeaderControls} from "../header/HeaderControls";
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -42,10 +42,10 @@ const Todolist = () => {
     const dispatch = useDispatch();
     const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists);
     const tasks = useAppSelector(state => state.tasks.todos)
-    const [modalActiveAddTask, setModalActiveAddTask] = useState(false) //модалка добавления тасок
-    const [errorModal, setErrorModal] = useState(false)//модалка Ошибки
+    const [modalActiveAddTask, setModalActiveAddTask] = useState<boolean|undefined>(false)
+    const [errorModalActive, setErrorModalActive] = useState(false)
     const [titleValue,setTitleValue]=useState("")
-    console.log("Todolist ERROR",errorModal)
+
     useEffect(() => {
         const savedTodoLists = localStorage.getItem("todoLists")
         const savedTasks = localStorage.getItem("tasks")
@@ -62,8 +62,6 @@ const Todolist = () => {
             }
         }
     }, []);
-    console.log("TITLE",titleValue)
-
     useEffect(() => {
         todolists.length && localStorage.setItem("todoLists", JSON.stringify(todolists))
         todolists.length && localStorage.setItem("tasks", JSON.stringify(tasks))
@@ -94,25 +92,25 @@ const Todolist = () => {
             <div className={style.header__block}>
                 <div className={style.text}>TODO LIST</div>
                 <div className={style.headerContent}>
-                    <DeleteTasksToggle Toggle={setIsShake} modalActiveAddTask={modalActiveAddTask} setModalActiveAddTask={setModalActiveAddTask} errorModal={errorModal} setErrorModal={setErrorModal} titleValue={titleValue}/>
-                    <ModalError errorModal={errorModal} setErrorModal={setErrorModal}>
+                    <DeleteTasksToggle toggleActiveShackingInput={setIsShake} isModalShowActiveAddTask={modalActiveAddTask} setIsModalShowActiveAddTask={setModalActiveAddTask} isErrorShowModal={errorModalActive} setIsErrorShowModal={setErrorModalActive} titleValueInputForCondition={titleValue}/>
+                    <ModalError errorModalActive={errorModalActive} setErrorModalActive={setErrorModalActive}>
                         <h1>Write your Title</h1>
                     </ModalError>
-                    <HeaderStand
+                    <HeaderControls
                         addItem={addTodolist}
-                        changeFilter={changeFilter}
-                        withSelect
+                        changeFilterTasksStatus={changeFilter}
+                        withSelectTasksStatus
                         size={'large'}
                         withSwitchTheme
                         isShake={isShake}
-                        Toggle={setIsShake}
-                        modalActiveAddTask={modalActiveAddTask}
-                        setModalActiveAddTask={setModalActiveAddTask}
+                        toggle={setIsShake}
+                        isModalVisibleAddTask={modalActiveAddTask}
+                        setIsModalVisibleAddTask={setModalActiveAddTask}
                         placeholder={'Search note...'}
-                        level={'primary'}
-                        setErrorModal={setErrorModal}
-                        titleValue={titleValue}
-                        setTitleValue={setTitleValue}
+                        variant={'primary'}
+                        setWithErrorModal={setErrorModalActive}
+                        titleValueAddItem={titleValue}
+                        setTitleValueAddItem={setTitleValue}
 
                     />
                 </div>
@@ -123,16 +121,14 @@ const Todolist = () => {
                     <div className={style.textContainer}>Empty...</div>
                 </div>
             )}
-            <div className={style.todoFlexContainer}>
+            <div className={style.todoContainer}>
                 {todolists.map(tl => (
                     <TodolistItems
                         todolistId={tl.id}
-                        title={tl.title}
-                        changeFilter={changeFilter}
-                        filter={tl.filter}
+                        titleTodo={tl.title}
+                        changeFilterTasksStatus={changeFilter}
+                        filterTasksStatus={tl.filter}
                         removeTodolist={removeTodolist}
-                        titleValue={titleValue}
-                        setTitleValue={setTitleValue}
                         changeTodolistTitle={changeTodolistTitle}
                     />
                 ))}

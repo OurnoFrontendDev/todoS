@@ -4,19 +4,19 @@ import style from './CheckBox.module.scss';
 type CustomCheckboxProps = {
     checked: boolean
     children?:React.ReactNode
-    onChangeHandler:(e: ChangeEvent<HTMLInputElement>)=>void
+    onChange:(e: ChangeEvent<HTMLInputElement>)=>void
 }
 
-export function CustomCheckbox(props: CustomCheckboxProps) {
+export function CheckBox(props: CustomCheckboxProps) {
     return (
-        <label className={style.checkboxWrapper}>
+        <label className={style.checkboxContainer}>
             <input
                 type="checkbox"
-                className={style.checkboxElement}
+                className={style.checkbox}
                 checked={props.checked}
-                onChange={props.onChangeHandler}
+                onChange={props.onChange}
             />
-            <p>{props.children}</p>
+            <span>{props.children}</span>
         </label>
     );
 }

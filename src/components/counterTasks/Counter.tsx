@@ -1,28 +1,27 @@
 import React, {useEffect, useState} from 'react';
-import s from "/src/components/counterTasks/Counter.module.scss";
-import {RootState, useAppSelector} from "../../state/store";
-import {useSelector} from "react-redux";
+import s from "./Counter.module.scss";
+import {useAppSelector} from "../../state/store";
 
 export const Counter = () => {
+    const addedNowTasks = useAppSelector((state) => state.tasks.addedNow);
+    const deletedTotalTasks = useAppSelector((state) => state.tasks.deletedTotal);
+    const addTasksForAllTimes = Number(localStorage.getItem("addedTotal") || "0")
 
-    const addedNow = useAppSelector((state) => state.tasks.addedNow);
-    const deletedTotal = useAppSelector((state) => state.tasks.deletedTotal);
-    const actTasksString = localStorage.getItem("addedTotal") || "0";
-    const actTasks = parseInt(actTasksString);
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisibleCounter, setIsVisibleCounter] = useState(false);
     useEffect(() => {
-        setIsVisible(actTasks > 0);
-    }, [actTasks]);
-    const containerClassName = isVisible ? `${s.containerCounter} ${s.visible}` : `${s.containerCounter}`;
+        setIsVisibleCounter(addTasksForAllTimes > 0);
+    }, [addTasksForAllTimes]);
+    const containerClassName = isVisibleCounter ? `${s.counterContainer} ${s.visible}` : `${s.counterContainer}`;
     return (
         <div className={containerClassName}>
             <div className={s.content}>
-                <div className={s.firstBlock}>Добавленные задачи(сейчас): <span className={s.value}>{addedNow}</span>
+                <div className={s.counterItem}>Добавленные задачи(сейчас): <span
+                    className={s.value}>{addedNowTasks}</span>
                 </div>
-                <div className={s.secondBlock}>Добавленные задачи за все время: <span
-                    className={s.value}>{actTasks}</span></div>
-                <div className={s.thirdBlock}>Удалено задач за все время: <span
-                    className={s.value}>{deletedTotal}</span></div>
+                <div className={s.counterItem}>Добавленные задачи за все время: <span
+                    className={s.value}>{addTasksForAllTimes}</span></div>
+                <div className={s.counterItem}>Удалено задач за все время: <span
+                    className={s.value}>{deletedTotalTasks}</span></div>
             </div>
         </div>
     );

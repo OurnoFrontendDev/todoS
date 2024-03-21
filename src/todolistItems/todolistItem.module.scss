@@ -1,4 +1,4 @@
-.todoItemContainer{
+.todoItemContainer {
   width: 520px;
   height: fit-content;
   margin-right: 115px;
@@ -6,9 +6,10 @@
   display: flex;
   flex-direction: column;
 }
-.todolistsItemsIcons{
+
+.todolistsItemsIcons {
   display: flex;
-  flex-wrap:nowrap;
+  flex-wrap: nowrap;
   margin-left: 31px;
   padding-bottom: 20px;
 }
@@ -17,12 +18,13 @@
   border-bottom: 1px solid #6C63FF;
   padding-bottom: 3px;
 }
-.lineActive{
+
+.completedTask {
   text-decoration: line-through;
 }
 
-.editableContainer{
+.editTask {
   display: flex;
   padding: 20px;
-  flex-grow:1 ;
+  flex-grow: 1;
 }

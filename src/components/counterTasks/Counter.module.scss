@@ -1,4 +1,4 @@
-.containerCounter {
+.counterContainer {
   display: flex;
   flex-direction: column;
   width: 400px;
@@ -9,7 +9,7 @@
   border-radius: 20px;
   left: -500px;
 }
-.containerCounter.visible{
+.counterContainer.visible{
   left: 10px;
   transition: left 0.5s ease;
 }
@@ -21,9 +21,7 @@
   font-size: 15px;
   margin: 5px 10px 0 10px;
 }
-.firstBlock,
-.secondBlock,
-.thirdBlock {
+.counterItem {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;

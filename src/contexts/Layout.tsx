@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import useTheme from "../hooks/useTheme";
-import {dark} from "@mui/material/styles/createPalette";
+import {useTheme} from "../hooks/useTheme";
 type Props = {
     children: React.ReactNode;
 };

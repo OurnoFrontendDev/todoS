@@ -1,9 +1,7 @@
-// InputComponent.tsx
-
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from "/src/components/manipulationsWithTasks/inputStyle.module.scss"
 import classNames from "classnames";
-
+type InputSize = "extraLarge" | "large" | "small"
 type UniversalInputProps = {
     value?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -13,7 +11,7 @@ type UniversalInputProps = {
     isError?: boolean
     isShaking?: boolean
     className?: string
-    size: "extraLarge" | "large" | "small"
+    size: InputSize
 }
 
 const InputComponent: React.FC<UniversalInputProps> = (props) => {
@@ -22,6 +20,7 @@ const InputComponent: React.FC<UniversalInputProps> = (props) => {
         large: s.largeInput,
         small: s.smallInput
     }
+    const classNamesInput= classNames(props.className, s.input, inputSizeToClassNameMap[props.size])
     return (
         <div><input
             type="text"
@@ -29,7 +28,7 @@ const InputComponent: React.FC<UniversalInputProps> = (props) => {
             onChange={props.onChange}
             onKeyDown={props.onKeyDown}
             placeholder={props.placeholder}
-            className={classNames(props.className, s.input, inputSizeToClassNameMap[props.size])}
+            className={classNamesInput}
         />
         </div>
     );

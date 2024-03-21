@@ -1,12 +1,11 @@
-.checkboxWrapper {
+.checkboxContainer {
   display: block;
   position: relative;
   margin: 3px 0 0 23px;
   padding-left: 26px;
   right: 20px;
-
 }
-.checkboxElement {
+.checkbox {
   appearance: none;
   position: absolute;
   top: 21px;
@@ -18,10 +17,10 @@
   border-radius: 3px;
 }
 
-.checkboxElement:checked{
+.checkbox:checked{
   background-color: #6C63FF;
 }
-.checkboxElement:checked::before{
+.checkbox:checked::before{
   content: "";
   display: block;
   position: absolute;

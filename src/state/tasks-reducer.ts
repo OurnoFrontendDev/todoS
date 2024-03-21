@@ -2,15 +2,53 @@ import {v1} from 'uuid';
 import {AddTodolistActionType, RemoveTodolistActionType} from './todolists-reducer';
 import {TaskType} from "../todolistItems/TodolistItems";
 import {TasksStateType} from "../components/todolist/Todolist";
+const REMOVE_TASKS = "REMOVE-TASK"
+const ADD_TASKS = "ADD-TASKS"
+const CHANGE_TASK_STATUS = 'CHANGE-TASK-STATUS'
+const CHANGE_TASK_TITLE = 'CHANGE-TASK-TITLE'
+const DELETE_ALL_TASKS = 'DELETE-ALL-TASKS'
+const INIT_TASKS = 'INIT-TASKS'
+
+type initialTasksType = {
+    type: typeof INIT_TASKS
+    payload: { [key: string]: TaskType[]; }
+}
+type addTasksActionCreatorType = {
+    type: typeof ADD_TASKS
+    title: string
+    todolistId: string
+}
+type removeTaskActionCreatorType = {
+    type: typeof REMOVE_TASKS
+    taskId: string
+    todolistId: string
+}
+type changeTaskStatusActionCreatorType = {
+    type: typeof CHANGE_TASK_STATUS
+    taskId: string
+    isDone: boolean
+    todolistId: string
+}
+type DeleteAllTasksActionCreatorType = {
+    type: typeof DELETE_ALL_TASKS
+}
+type  changeTaskTitleActionCreatorType = {
+    type: typeof CHANGE_TASK_TITLE
+    taskId: string
+    title: string
+    todolistId: string
+}
 
 type ActionsType =
-    removeTaskAC
-    | addTaskACType
-    | changeTaskStatusACType
-    | changeTaskTitleACType
-    | DeleteAllTasksACType
+    removeTaskActionCreatorType
+    | addTasksActionCreatorType
+    | changeTaskStatusActionCreatorType
+    | DeleteAllTasksActionCreatorType
+    | changeTaskTitleActionCreatorType
+    | initialTasksType
     | RemoveTodolistActionType
     | AddTodolistActionType
+
 
 const initialState: TasksStateType = {
     todos: {},
@@ -18,19 +56,6 @@ const initialState: TasksStateType = {
     addedTotal: 0,
     deletedTotal: 0
 };
-// todos: {
-//     [todolistId1]: [
-//         {id: v1(), title: 'Note#1', isDone: true},
-//         {id: v1(), title: 'Note #2', isDone: true},
-//     ],
-//         [todolistId2]: [
-//         {id: v1(), title: 'Note#1', isDone: true},
-//         {id: v1(), title: 'Note #2', isDone: true},
-//     ],
-// },
-// addedNow: 0,
-//     addedTotal: 0,
-//     deletedTotal: 0,
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
@@ -42,15 +67,16 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                     ...state.todos,
                     [action.todolistId]: updatedTodos,
                 },
-
                 deletedTotal: state.deletedTotal ? state.deletedTotal + 1 : 1,
                 addedNow: state.addedNow ? state.addedNow - 1 : 0
             };
         }
-        case 'ADD-TASK': {
+        case 'ADD-TASKS': {
             const newTask: TaskType = {id: v1(), title: action.title, isDone: false}
             const updatedAddedTotal = state.addedTotal ? state.addedTotal + 1 : 1;
-            localStorage.setItem('addedTotal', JSON.stringify(updatedAddedTotal)); return {...state,
+            localStorage.setItem('addedTotal', JSON.stringify(updatedAddedTotal));
+            return {
+                ...state,
                 todos: {...state.todos, [action.todolistId]: [...state.todos[action.todolistId], newTask]},
                 addedNow: state.addedNow ? state.addedNow + 1 : 1,
                 addedTotal: state.addedTotal ? state.addedTotal + 1 : 1,
@@ -98,7 +124,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case 'DELETE-ALL-TASKS': {
             const newState = {...state};
             Object.keys(newState.todos).forEach(todolistId => {
-                newState.todos[todolistId] = [];});
+                newState.todos[todolistId] = [];
+            });
             return {
                 ...newState,
                 addedNow: 0,
@@ -106,34 +133,30 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 deletedTotal: state.deletedTotal ? state.deletedTotal + 1 : 1,
             };
         }
-        case "INIT-TASKS":{
-            return {todos:action.payload}
+        case "INIT-TASKS": {
+            return {todos: action.payload}
         }
         default:
             return state;
     }
 }
 
-type removeTaskAC = ReturnType<typeof removeTaskAC>
 
 export const removeTaskAC = (taskId: string, todolistId: string) => {
     return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId} as const
 }
-type addTaskACType = ReturnType<typeof addTaskAC>
 export const addTaskAC = (title: string, todolistId: string) => {
-    return {type: 'ADD-TASK', title, todolistId} as const
+    return {type: 'ADD-TASKS', title, todolistId} as const
 }
-type changeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
 export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string) => {
     return {type: 'CHANGE-TASK-STATUS', isDone, todolistId, taskId} as const
 }
-type changeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
 export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => {
     return {type: 'CHANGE-TASK-TITLE', title, todolistId, taskId} as const
 }
-
-type DeleteAllTasksACType = ReturnType<typeof deleteAllTasks>
 export const deleteAllTasks = () => {
     return {type: 'DELETE-ALL-TASKS'} as const
 }
+
+
 

@@ -1,38 +1,42 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from "/src/components/manipulationsWithTasks/EditableSpan.module.scss"
-import {UniversalButton} from "../button/UniversalButton";
+import {Button} from "../button/Button";
 import {Icon} from "../svg/SvgLoader";
 import Pencil from '/src/img/PencilEdit.svg'
 
 type EditableSpanPropsType = {
-    value: string
-    onChange: (newValue: string) => void
+    valueTitleItem: string
+    onChange: (valueTitleItem: string) => void
 }
 
 export function EditableSpan(props: EditableSpanPropsType) {
-    let [editMode, setEditMode] = useState(false);
-    let [title, setTitle] = useState(props.value);
+    const [editModeActive, setEditModeActive] = useState(false);
+    const [ValueItem, setValueItem] = useState(props.valueTitleItem);
 
-    const activateEditMode = () => {
-        setEditMode(true);
-        setTitle(props.value);
+    const handleToggleEdit = () => {
+        setEditModeActive(true);
+        setValueItem(props.valueTitleItem);
     }
-    const activateViewMode = () => {
-        setEditMode(false);
-        props.onChange(title);
+    const handleToggleViewMode = () => {
+        setEditModeActive(false);
+        props.onChange(ValueItem);
     }
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        setValueItem(e.currentTarget.value)
     }
+    const EditModeChange = () => {
+        setEditModeActive(true)
+    }
+
     return (
         <>
-            {editMode
-                ? <input value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
-                : <span onDoubleClick={activateEditMode} className={s.editTasktitle}>{props.value}</span>
+            {editModeActive
+                ? <input value={ValueItem} onChange={changeTitle} autoFocus onBlur={handleToggleViewMode}/>
+                : <span onDoubleClick={handleToggleEdit} className={s.editTasktitle}>{props.valueTitleItem}</span>
             }
-            <UniversalButton callBack={() => setEditMode(true)} size={"small"} level={"icons"}>
+            <Button onClick={EditModeChange} size={"small"} variant={"icons"}>
                 <Icon Svg={Pencil} width={15} height={15}/>
-            </UniversalButton>
+            </Button>
         </>
     );
 }

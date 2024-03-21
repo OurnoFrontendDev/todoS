@@ -1,13 +1,12 @@
-// FilterSelect.tsx
 import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from "../todolist/Todolist";
 import style from './filterSelect.module.scss'
 
-type FilterSelectProps = {
+type FilterSelectTaskStatus = {
     onChange: (value: FilterValuesType) => void;
 };
 
-const FilterSelect: React.FC<FilterSelectProps> = ({onChange}) => {
+export const FilterSelectTaskStatus: React.FC<FilterSelectTaskStatus> = ({onChange}) => {
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
         onChange(event.currentTarget.value as FilterValuesType);
     };
@@ -15,9 +14,8 @@ const FilterSelect: React.FC<FilterSelectProps> = ({onChange}) => {
         <select onChange={handleChange} className={style.select}>
             <option value="all">All</option>
             <option value="active">Active</option>
-            <option value="completed" >Completed</option>
+            <option value="completed">Completed</option>
         </select>
     );
 };
 
-export default FilterSelect;
