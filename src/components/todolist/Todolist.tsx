@@ -38,7 +38,7 @@ export type TasksStateType = {
     };
 } & CounterType;
 
-const Todolist = () => {
+export  const Todolist = () => {
     const dispatch = useDispatch();
     const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists);
     const tasks = useAppSelector(state => state.tasks.todos)
@@ -137,4 +137,3 @@ const Todolist = () => {
     );
 };
 
-export default Todolist;

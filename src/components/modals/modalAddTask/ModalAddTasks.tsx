@@ -1,8 +1,8 @@
 import React, {ChangeEvent, ReactNode, useState} from 'react';
 import s from "./modal.module.scss"
-import Input from "../../manipulationsWithTasks/Input";
 import {Button} from "../../button/Button";
 import ReactDOM from "react-dom";
+import {Input} from "../../manipulationsWithTasks/Input";
 
 type ModalProps = {
     isActiveModalAddTodo?: boolean | undefined

@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from "./headerStandStyle.module.scss"
 import {useTheme} from "../../hooks/useTheme";
 import {ModalAddTasks} from "../modals/modalAddTask/ModalAddTasks";
-import Input from "../manipulationsWithTasks/Input";
+import {Input} from "../manipulationsWithTasks/Input";
 import {FilterValuesType} from "../todolist/Todolist";
 import {Icon} from "../svg/SvgLoader";
 import SwitchToDark from "/src/img/VectorLight.svg"

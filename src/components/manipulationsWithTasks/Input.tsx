@@ -14,7 +14,7 @@ type UniversalInputProps = {
     size: InputSize
 }
 
-const InputComponent: React.FC<UniversalInputProps> = (props) => {
+export const Input: React.FC<UniversalInputProps> = (props) => {
     const inputSizeToClassNameMap: Record<UniversalInputProps["size"], string> = {
         extraLarge: s.extraLargeInput,
         large: s.largeInput,
@@ -33,4 +33,4 @@ const InputComponent: React.FC<UniversalInputProps> = (props) => {
         </div>
     );
 };
-export default InputComponent;
+
