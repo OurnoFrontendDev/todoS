@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, useAppSelector} from '../../state/store';
 import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC
+    addTodolist,
+    changeTodolistFilter,
+    changeTodolistTitle,
+    removeTodolist
 } from '../../state/todolists-reducer';
 import {Counter} from '../counterTasks/Counter';
 import {TaskType, TodolistItems} from '../../todolistItems/TodolistItems';
@@ -71,19 +71,19 @@ export  const Todolist = () => {
 
 
     function changeFilter(value: FilterValuesType) {
-        dispatch(changeTodolistFilterAC(value));
+        dispatch(changeTodolistFilter(value));
     }
 
-    function removeTodolist(id: string) {
-        dispatch(removeTodolistAC(id));
+    function removeTodolists(id: string) {
+        dispatch(removeTodolist(id));
     }
 
-    function changeTodolistTitle(id: string, title: string) {
-        dispatch(changeTodolistTitleAC(id, title));
+    function changeTodolistsTitle(id: string, title: string) {
+        dispatch(changeTodolistTitle(id, title));
     }
 
-    function addTodolist(title: string) {
-        dispatch(addTodolistAC(title));
+    function addTodolists(title: string) {
+        dispatch(addTodolist(title));
     }
 
     return (
@@ -97,7 +97,7 @@ export  const Todolist = () => {
                         <h1>Write your Title</h1>
                     </ModalError>
                     <HeaderControls
-                        addItem={addTodolist}
+                        addItem={addTodolists}
                         changeFilterTasksStatus={changeFilter}
                         withSelectTasksStatus
                         size={'large'}
@@ -128,8 +128,8 @@ export  const Todolist = () => {
                         titleTodo={tl.title}
                         changeFilterTasksStatus={changeFilter}
                         filterTasksStatus={tl.filter}
-                        removeTodolist={removeTodolist}
-                        changeTodolistTitle={changeTodolistTitle}
+                        removeTodolist={removeTodolists}
+                        changeTodolistTitle={changeTodolistsTitle}
                     />
                 ))}
             </div>

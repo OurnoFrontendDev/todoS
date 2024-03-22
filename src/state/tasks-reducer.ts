@@ -142,20 +142,20 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
 }
 
 
-export const removeTaskAC = (taskId: string, todolistId: string) => {
-    return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId} as const
+export const removeTask = (taskId: string, todolistId: string) => {
+    return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId}
 }
 export const addTaskAC = (title: string, todolistId: string) => {
-    return {type: 'ADD-TASKS', title, todolistId} as const
+    return {type: 'ADD-TASKS', title, todolistId}
 }
-export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string) => {
-    return {type: 'CHANGE-TASK-STATUS', isDone, todolistId, taskId} as const
+export const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
+    return {type: 'CHANGE-TASK-STATUS', isDone, todolistId, taskId}
 }
-export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string) => {
-    return {type: 'CHANGE-TASK-TITLE', title, todolistId, taskId} as const
+export const changeTaskTitle = (taskId: string, title: string, todolistId: string) => {
+    return {type: 'CHANGE-TASK-TITLE', title, todolistId, taskId}
 }
 export const deleteAllTasks = () => {
-    return {type: 'DELETE-ALL-TASKS'} as const
+    return {type: 'DELETE-ALL-TASKS'}
 }
 
 

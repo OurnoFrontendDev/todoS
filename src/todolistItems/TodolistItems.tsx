@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '../state/store';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from '../state/tasks-reducer';
+import {addTaskAC, changeTaskStatus, changeTaskTitle, removeTask} from '../state/tasks-reducer';
 import {Icon} from '../components/svg/SvgLoader';
 import trash from '/src/img/trasher.svg';
 import s from '/src/todolistItems/todolistItem.module.scss';
@@ -40,15 +40,15 @@ export function TodolistItems(props: TodolistItems) {
     };
 
     const removeTaskACHandler = (taskId: string) => {
-        dispatch(removeTaskAC(taskId, props.todolistId));
+        dispatch(removeTask(taskId, props.todolistId));
     };
 
     const toggleTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
-        dispatch(changeTaskStatusAC(taskId, newIsDoneValue, props.todolistId));
+        dispatch(changeTaskStatus(taskId, newIsDoneValue, props.todolistId));
     };
 
-    const changeTaskTitle = (taskId: string, newValue: string) => {
-        dispatch(changeTaskTitleAC(taskId, newValue, props.todolistId));
+    const changeTasksTitle = (taskId: string, newValue: string) => {
+        dispatch(changeTaskTitle(taskId, newValue, props.todolistId));
     };
     const filterTasksForTodolist = useMemo(() => {
         let filteredTasks = tasks;
@@ -84,7 +84,7 @@ export function TodolistItems(props: TodolistItems) {
                                       onChange={(e: ChangeEvent<HTMLInputElement>) => toggleTaskStatus(task.id, e.currentTarget.checked)}/>
                             <div className={s.editTask}>
                                 <EditableSpan valueTitleItem={task.title}
-                                              onChange={(newValue: string) => changeTaskTitle(task.id, newValue)}/>
+                                              onChange={(newValue: string) => changeTasksTitle(task.id, newValue)}/>
                                 <Button onClick={() => handleDeleteTask(task.id)} size={'small'} variant={'icons'}>
                                     <Icon Svg={trash} width={18} height={18}/>
                                 </Button>
