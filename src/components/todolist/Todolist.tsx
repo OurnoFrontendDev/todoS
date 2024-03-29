@@ -4,21 +4,23 @@ import {RootState, useAppSelector} from '../../state/store';
 import {
     addTodolist,
     changeTodolistFilter,
-    changeTodolistTitle,
+    changeTodolistTitle, initTodoList,
     removeTodolist
-} from '../../state/todolists-reducer';
-import {Counter} from '../counterTasks/Counter';
+} from '../../state/todolist-reducer';
+import {TodosCounter} from '../todosCounter/TodosCounter';
 import {TaskType, TodolistItems} from '../../todolistItems/TodolistItems';
-import style from './todolistStyle.module.scss';
+import style from './todolistStyles.module.scss';
 import {DeleteTasksToggle} from '../toggle/DeleteTasksToggle';
 import DetectiveLight from '../../img/DetectiveLight.svg';
 import DetectiveDark from '../../img/DetectiveDark.svg';
 import {Icon} from '../svg/SvgLoader';
 import {useTheme} from '../../hooks/useTheme';
 import {ModalError} from "../modals/modalError/ModalError";
-import {HeaderControls} from "../header/HeaderControls";
+import {TodosListHeaderControls} from "../header/TodosListHeaderControlsProps";
+import classNames from "classnames";
+import {FilterValuesType} from "../header/FilterSelectTaskStatusProps";
+import {initTasks} from "../../state/tasks-reducer";
 
-export type FilterValuesType = 'all' | 'active' | 'completed';
 
 export type TodolistType = {
     id: string;
@@ -38,98 +40,109 @@ export type TasksStateType = {
     };
 } & CounterType;
 
-export  const Todolist = () => {
+export const Todolist = () => {
     const dispatch = useDispatch();
-    const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists);
+    const todoLists = useSelector<RootState, TodolistType[]>(state => state.todolists);
     const tasks = useAppSelector(state => state.tasks.todos)
-    const [modalActiveAddTask, setModalActiveAddTask] = useState<boolean|undefined>(false)
-    const [errorModalActive, setErrorModalActive] = useState(false)
-    const [titleValue,setTitleValue]=useState("")
 
+    const [modalActiveAddTask, setModalActiveAddTask] = useState<boolean | undefined>(false)
+    const [isErrorModalActive, setIsErrorModalActive] = useState(false)
+
+    const [titleValueAddItemTaskOrTodo, setTitleValueAddItemTaskOrTodo] = useState("")
+
+    const [isStartShakeElementsInputOrToggle, setIsStartShakeElementsInputOrToggle] = useState(false);
+
+    const {isDark} = useTheme();
     useEffect(() => {
+
         const savedTodoLists = localStorage.getItem("todoLists")
         const savedTasks = localStorage.getItem("tasks")
         if (savedTodoLists) {
             const parsedSavedTodolist: TodolistType[] = JSON.parse(savedTodoLists)
+            console.log(parsedSavedTodolist)
             if (parsedSavedTodolist.length) {
-                dispatch({type: "INIT-TODO-LIST", payload: parsedSavedTodolist})
+                dispatch(initTodoList(parsedSavedTodolist))
             }
             if (savedTasks) {
                 const parsedSavedTasks: TasksStateType = JSON.parse(savedTasks)
+                console.log(parsedSavedTasks)
                 if (Object.keys(parsedSavedTasks).length) {
-                    dispatch({type: "INIT-TASKS", payload: parsedSavedTasks})
+                    dispatch(initTasks(parsedSavedTasks))
                 }
             }
         }
     }, []);
     useEffect(() => {
-        todolists.length && localStorage.setItem("todoLists", JSON.stringify(todolists))
-        todolists.length && localStorage.setItem("tasks", JSON.stringify(tasks))
-    }, [todolists, tasks]);
-    const [isShake, setIsShake] = useState(false);
-    const {isDark} = useTheme();
+        todoLists.length && localStorage.setItem("todoLists", JSON.stringify(todoLists))
+        todoLists.length && localStorage.setItem("tasks", JSON.stringify(tasks))
+    }, [todoLists, tasks]);
 
 
-    function changeFilter(value: FilterValuesType) {
+    function handleChangeValueFilterTodo(value: FilterValuesType) {
         dispatch(changeTodolistFilter(value));
     }
 
-    function removeTodolists(id: string) {
+    function handleRemoveTodolist(id: string) {
         dispatch(removeTodolist(id));
     }
 
-    function changeTodolistsTitle(id: string, title: string) {
+    function handleChangeTodolistTitle(id: string, title: string) {
         dispatch(changeTodolistTitle(id, title));
     }
 
-    function addTodolists(title: string) {
+    function handleAddTodolist(title: string) {
         dispatch(addTodolist(title));
     }
 
+    const containerTodo = classNames(style.container, {
+        [style.containerDark]: isDark,
+    })
     return (
-        <div className={`${style.container} ${isDark ? style.containerDark : style.container}`}>
-            <Counter/>
+        <div className={containerTodo}>
+            <TodosCounter/>
             <div className={style.header__block}>
                 <div className={style.text}>TODO LIST</div>
                 <div className={style.headerContent}>
-                    <DeleteTasksToggle toggleActiveShackingInput={setIsShake} isModalShowActiveAddTask={modalActiveAddTask} setIsModalShowActiveAddTask={setModalActiveAddTask} isErrorShowModal={errorModalActive} setIsErrorShowModal={setErrorModalActive} titleValueInputForCondition={titleValue}/>
-                    <ModalError errorModalActive={errorModalActive} setErrorModalActive={setErrorModalActive}>
-                        <h1>Write your Title</h1>
+                    <DeleteTasksToggle toggleIsShackingToggle={setIsStartShakeElementsInputOrToggle}
+                                       setIsModalShowActiveAddTask={setModalActiveAddTask}
+                                       setIsErrorShowModal={setIsErrorModalActive}
+                                       titleValueInputForCondition={titleValueAddItemTaskOrTodo}/>
+                    <ModalError isErrorModalActive={isErrorModalActive} setIsErrorModalActive={setIsErrorModalActive}>
+                        <h1>Enter values to create a Todolist</h1>
                     </ModalError>
-                    <HeaderControls
-                        addItem={addTodolists}
-                        changeFilterTasksStatus={changeFilter}
-                        withSelectTasksStatus
-                        size={'large'}
+                    <TodosListHeaderControls
+                        addItemTodoOrTasks={handleAddTodolist}
+                        handleChangeValueFilterTodo={handleChangeValueFilterTodo}
+                        withFilterSelectTaskStatus
+                        ButtonSize={'large'}
                         withSwitchTheme
-                        isShake={isShake}
-                        toggle={setIsShake}
+                        isShake={isStartShakeElementsInputOrToggle}
+                        setIsStartShakeElementsInputOrToggle={setIsStartShakeElementsInputOrToggle}
                         isModalVisibleAddTask={modalActiveAddTask}
                         setIsModalVisibleAddTask={setModalActiveAddTask}
-                        placeholder={'Search note...'}
-                        variant={'primary'}
-                        setWithErrorModal={setErrorModalActive}
-                        titleValueAddItem={titleValue}
-                        setTitleValueAddItem={setTitleValue}
-
+                        placeholderForInputElements={'Search note...'}
+                        ButtonVariations={'primary'}
+                        titleValueAddItem={titleValueAddItemTaskOrTodo}
+                        setTitleValueAddItem={setTitleValueAddItemTaskOrTodo}
+                        inputSize={"large"}
                     />
                 </div>
             </div>
-            {!todolists.length && (
+            {!todoLists.length && (
                 <div>
                     <Icon Svg={isDark ? DetectiveDark : DetectiveLight} width={200} height={180}/>
                     <div className={style.textContainer}>Empty...</div>
                 </div>
             )}
             <div className={style.todoContainer}>
-                {todolists.map(tl => (
+                {todoLists.map(tl => (
                     <TodolistItems
                         todolistId={tl.id}
-                        titleTodo={tl.title}
-                        changeFilterTasksStatus={changeFilter}
+                        titleValueTodo={tl.title}
+                        changeFilterTasksStatus={handleChangeValueFilterTodo}
                         filterTasksStatus={tl.filter}
-                        removeTodolist={removeTodolists}
-                        changeTodolistTitle={changeTodolistsTitle}
+                        removeTodolist={handleRemoveTodolist}
+                        changeTodolistTitle={handleChangeTodolistTitle}
                     />
                 ))}
             </div>

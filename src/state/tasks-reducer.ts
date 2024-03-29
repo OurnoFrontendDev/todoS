@@ -1,61 +1,9 @@
 import {v1} from 'uuid';
-import {AddTodolistActionType, RemoveTodolistActionType} from './todolists-reducer';
 import {TaskType} from "../todolistItems/TodolistItems";
 import {TasksStateType} from "../components/todolist/Todolist";
-const REMOVE_TASKS = "REMOVE-TASK"
-const ADD_TASKS = "ADD-TASKS"
-const CHANGE_TASK_STATUS = 'CHANGE-TASK-STATUS'
-const CHANGE_TASK_TITLE = 'CHANGE-TASK-TITLE'
-const DELETE_ALL_TASKS = 'DELETE-ALL-TASKS'
-const INIT_TASKS = 'INIT-TASKS'
-
-type initialTasksType = {
-    type: typeof INIT_TASKS
-    payload: { [key: string]: TaskType[]; }
-}
-type addTasksActionCreatorType = {
-    type: typeof ADD_TASKS
-    title: string
-    todolistId: string
-}
-type removeTaskActionCreatorType = {
-    type: typeof REMOVE_TASKS
-    taskId: string
-    todolistId: string
-}
-type changeTaskStatusActionCreatorType = {
-    type: typeof CHANGE_TASK_STATUS
-    taskId: string
-    isDone: boolean
-    todolistId: string
-}
-type DeleteAllTasksActionCreatorType = {
-    type: typeof DELETE_ALL_TASKS
-}
-type  changeTaskTitleActionCreatorType = {
-    type: typeof CHANGE_TASK_TITLE
-    taskId: string
-    title: string
-    todolistId: string
-}
-
-type ActionsType =
-    removeTaskActionCreatorType
-    | addTasksActionCreatorType
-    | changeTaskStatusActionCreatorType
-    | DeleteAllTasksActionCreatorType
-    | changeTaskTitleActionCreatorType
-    | initialTasksType
-    | RemoveTodolistActionType
-    | AddTodolistActionType
+import {ActionsType, initialState} from "../types/actionCreatorForTasksTypes";
 
 
-const initialState: TasksStateType = {
-    todos: {},
-    addedNow: 0,
-    addedTotal: 0,
-    deletedTotal: 0
-};
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
     switch (action.type) {
@@ -134,18 +82,17 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             };
         }
         case "INIT-TASKS": {
+            debugger
             return {todos: action.payload}
         }
         default:
             return state;
     }
 }
-
-
 export const removeTask = (taskId: string, todolistId: string) => {
     return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId}
 }
-export const addTaskAC = (title: string, todolistId: string) => {
+export const addTask = (title: string, todolistId: string) => {
     return {type: 'ADD-TASKS', title, todolistId}
 }
 export const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
@@ -157,6 +104,10 @@ export const changeTaskTitle = (taskId: string, title: string, todolistId: strin
 export const deleteAllTasks = () => {
     return {type: 'DELETE-ALL-TASKS'}
 }
-
+export const initTasks = (payload: TasksStateType) => {
+    debugger
+    return {type: "INIT-TASKS", payload: payload}
+}
+console.log(initTasks)
 
 

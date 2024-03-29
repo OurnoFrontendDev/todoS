@@ -17,13 +17,8 @@
 .smallInput {
   width: 200px;
   height: 25px;
-  background-color: yellow;
 }
 
-.smallInput::placeholder {
-
-
-}
 .largeInput {
   width: 590px;
   font-weight: normal;
@@ -34,6 +29,7 @@
   margin: 24px 30px 29px 30px;
   font-weight: normal;
 }
+
 .extraLargeInput::placeholder {
   padding: 11px 294px 11px 16px;
   font-weight: 500;

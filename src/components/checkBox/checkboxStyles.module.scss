@@ -5,6 +5,7 @@
   padding-left: 26px;
   right: 20px;
 }
+
 .checkbox {
   appearance: none;
   position: absolute;
@@ -20,6 +21,7 @@
 .checkbox:checked{
   background-color: #6C63FF;
 }
+
 .checkbox:checked::before{
   content: "";
   display: block;

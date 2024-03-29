@@ -1,14 +1,13 @@
 import React, {ChangeEvent} from 'react';
-import {FilterValuesType} from "../todolist/Todolist";
 import style from './filterSelect.module.scss'
-
-type FilterSelectTaskStatus = {
-    onChange: (value: FilterValuesType) => void;
+export type FilterValuesType = 'all' | 'active' | 'completed'|undefined ;
+type FilterSelectTaskStatusProps = {
+    onChange?: (value?: FilterValuesType) => void;
 };
 
-export const FilterSelectTaskStatus: React.FC<FilterSelectTaskStatus> = ({onChange}) => {
+export const FilterSelectTaskStatus: React.FC<FilterSelectTaskStatusProps> = ({onChange}) => {
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        onChange(event.currentTarget.value as FilterValuesType);
+        onChange?.(event.currentTarget.value as FilterValuesType);
     };
     return (
         <select onChange={handleChange} className={style.select}>

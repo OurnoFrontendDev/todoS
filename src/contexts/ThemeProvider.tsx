@@ -2,7 +2,7 @@ import React, {createContext, Dispatch, ReactNode, SetStateAction, useMemo, useS
 
 type TypeSetState<T> = Dispatch<SetStateAction<T>>
 
-interface IContext {
+interface ThemeContextType {
     isDark: boolean
     setIsDark?: TypeSetState<boolean>
 }
@@ -10,7 +10,7 @@ interface IContext {
 type ThemeProviderProps = {
     children: ReactNode;
 };
-export const ThemeContext = createContext<IContext>({isDark: false});
+export const ThemeContext = createContext<ThemeContextType>({isDark: false});
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
     const [isDark, setIsDark] = useState(false);
     const value = useMemo(() => ({isDark, setIsDark}), [isDark])

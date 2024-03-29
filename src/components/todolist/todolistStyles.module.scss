@@ -9,11 +9,22 @@
   font-family: 'Kanit', sans-serif;
   margin-top: 44px;
 }
-
-.textWrap {
+.textContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .text {
+    font-weight: bold;
+    font-size: 26px;
+    width: 120px;
+    height: 34px;
+    margin-bottom: 19px;
+    margin-left: 71px;
+    font-family: "Kanit", sans-serif;
+    margin-top: 32px;
+    line-height: 1.25; // или любое другое необходимое значение
+  }
 }
 .header__block {
   width: 800px;
@@ -23,17 +34,7 @@
   align-items: center;
   margin-right: 69px;
 }
-.text {
-  font-weight: bold;
-  font-size: 26px;
-  width: 120px;
-  height: 34px;
-  margin-bottom: 19px;
-  margin-left: 71px;
-  font-family: "Kanit", sans-serif;
-  margin-top:32px;
-  line-height: 33.87px;
-}
+
 .headerContent {
   display: flex;
   flex-direction: row;

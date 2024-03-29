@@ -9,6 +9,7 @@
   border-radius: 20px;
   left: -500px;
 }
+
 .counterContainer.visible{
   left: 10px;
   transition: left 0.5s ease;
@@ -21,6 +22,7 @@
   font-size: 15px;
   margin: 5px 10px 0 10px;
 }
+
 .counterItem {
   display: flex;
   justify-content: space-between;

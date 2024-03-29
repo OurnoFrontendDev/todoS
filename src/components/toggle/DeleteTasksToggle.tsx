@@ -1,39 +1,45 @@
 import React, {useState} from 'react';
-import s from "./toglerStyle.module.scss"
+import style from "./toglerStyles.module.scss"
 import {useDispatch} from "react-redux";
 import {deleteAllTasks} from "../../state/tasks-reducer";
-import { useAppSelector} from "../../state/store";
+import {useAppSelector} from "../../state/store";
+import classNames from "classnames";
 
-type ToggleType = {
-    toggleActiveShackingInput: (isShake: boolean) => void
-    isModalShowActiveAddTask: boolean |undefined
+type DeleteTasksToggleProps = {
+    toggleIsShackingToggle: (isShake: boolean) => void
     setIsModalShowActiveAddTask: (isModalShowActiveAddTask: boolean) => void
-    isErrorShowModal: boolean
     setIsErrorShowModal: (isErrorShowModal: boolean) => void
     titleValueInputForCondition: string
 }
-export const DeleteTasksToggle = (props: ToggleType) => {
+export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
+    const {
+        toggleIsShackingToggle,
+        setIsModalShowActiveAddTask,
+        setIsErrorShowModal,
+        titleValueInputForCondition
+    } = props
     const dispatch = useDispatch()
     const tasks = useAppSelector(state => state.tasks.todos)
-    const [isChecked, setIsChecked] = useState(false);
-    const [isShake, setIsShake] = useState(false)
     const deletedTotal = useAppSelector((state) => state.tasks.deletedTotal);
     const isEmptyTasks = Object.keys(tasks).length === 0
+
+    const [isChecked, setIsChecked] = useState(false);
+    const [isShake, setIsShake] = useState(false)
     const handleDeleteTasks = () => {
         if (isEmptyTasks) {
-            props.toggleActiveShackingInput(true);
-            props.setIsModalShowActiveAddTask(true);
+           toggleIsShackingToggle(true);
+            setIsModalShowActiveAddTask(true);
             setIsShake(true);
             setTimeout(() => {
                 setIsShake(false);
-                props.toggleActiveShackingInput(false);
+                props.toggleIsShackingToggle(false);
             }, 500);
-        } else if (props.titleValueInputForCondition.trim() === "" && deletedTotal && deletedTotal > 0) {
+        } else if (titleValueInputForCondition.trim() === "" && deletedTotal && deletedTotal > 0) {
             setIsShake(true);
             setTimeout(() => {
-                props.setIsErrorShowModal(true);
+                setIsErrorShowModal(true);
             }, 100);
-        } else  {
+        } else {
             setIsChecked(true);
             setTimeout(() => {
                 setIsChecked(false);
@@ -41,12 +47,20 @@ export const DeleteTasksToggle = (props: ToggleType) => {
             dispatch(deleteAllTasks());
         }
     }
+    const stylesForToggleInput = classNames(
+        style.checkedToggle, style.inputToggle
+    )
+    const stylesForToggleSpan = classNames(
+        style.button, {
+            [style.shake]: isShake,
 
+        }
+    )
     return (
-        <div className={s.container}>
+        <div className={style.container}>
             <label>
-                <input type="checkbox" className={` ${s.checkedToggle} ${s.inputToggle}`} checked={isChecked}/>
-                <span className={`${s.button} ${isShake ? s.shake : ""}`} onClick={handleDeleteTasks}></span>
+                <input type="checkbox" className={stylesForToggleInput} checked={isChecked}/>
+                <span className={stylesForToggleSpan} onClick={handleDeleteTasks}></span>
             </label>
         </div>
     );

@@ -1,34 +1,31 @@
 import React from 'react';
-import style from './buttonStyle.module.scss';
+import style from './buttonStyles.module.scss';
 import classNames from "classnames";
-export type buttonVariantToClassNameMap ="primary"|"secondary"|"icons"|"default"
-export type buttonSizeToClassNameMap ="extraLarge" | "large" | "small"
+
+export type ButtonVariations = "primary" | "secondary" | "icons"
+export type ButtonSize = "extraLarge" | "large" | "small"
 
 type ButtonProps = {
     children?: React.ReactNode
     onClick: () => void
     className?: string
-    size: buttonSizeToClassNameMap
-    variant?:buttonVariantToClassNameMap
+    buttonSize: ButtonSize
+    buttonVariations?: ButtonVariations
 }
 
-export const Button = (props: ButtonProps) => {
-    const buttonSizeToClassNameMap: Record<ButtonProps["size"], string> = {
+export const Button: React.FC<ButtonProps> = (props) => {
+    const {children, onClick, className, buttonSize, buttonVariations} = props
+
+    const buttonSizeToClassNameMap: Record<ButtonProps["buttonSize"], string> = {
         extraLarge: style.extraButton,
         large: style.largeButton,
         small: style.smallButton
     }
-    const buttonVariantToClassNameMap: Record<buttonVariantToClassNameMap, string> = {
+    const buttonVariantToClassNameMap: Record<ButtonVariations, string> = {
         primary: style.primary,
         secondary: style.secondary,
-        icons:style.icons,
-        default:""
+        icons: style.icons,
     }
-    const onClickButtonHandler= () => props.onClick()
-    const classNamesButton = classNames(props.className, style.button, buttonSizeToClassNameMap[props.size],buttonVariantToClassNameMap[props.variant||"default"])
-    return (
-        <>
-            <button onClick={onClickButtonHandler} className={classNamesButton}>{props.children}</button>
-        </>
-    );
+    const classNamesButton = classNames(className, style.button, buttonSizeToClassNameMap[buttonSize], buttonVariations ? buttonVariantToClassNameMap[buttonVariations] : "")
+    return (<button onClick={onClick} className={classNamesButton}>{children}</button>);
 };

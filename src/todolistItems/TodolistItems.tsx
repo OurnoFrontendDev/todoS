@@ -1,15 +1,15 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '../state/store';
-import {addTaskAC, changeTaskStatus, changeTaskTitle, removeTask} from '../state/tasks-reducer';
+import {addTask, changeTaskStatus, changeTaskTitle, removeTask} from '../state/tasks-reducer';
 import {Icon} from '../components/svg/SvgLoader';
-import trash from '/src/img/trasher.svg';
-import s from '/src/todolistItems/todolistItem.module.scss';
-import {FilterValuesType} from "../components/todolist/Todolist";
-import {EditableSpan} from "../components/manipulationsWithTasks/EditableSpan";
+import TrashIcon from '/src/img/trasher.svg';
+import style from '/src/todolistItems/todolistItem.module.scss';
+import {EditableSpanValueTaskOrTodolist} from "../components/manipulationsWithTasks/EditableSpanValueTaskOrTodolist";
 import {Button} from "../components/button/Button";
-import {HeaderControls} from "../components/header/HeaderControls";
-import {CheckBox} from "../checkBox/CheckBox";
+import {TodosListHeaderControls} from "../components/header/TodosListHeaderControlsProps";
+import {Checkbox} from "../components/checkBox/Checkbox";
+import {FilterValuesType} from "../components/header/FilterSelectTaskStatusProps";
 
 export type TaskType = {
     id: string;
@@ -18,7 +18,7 @@ export type TaskType = {
 };
 type TodolistItems = {
     todolistId: string;
-    titleTodo: string;
+    titleValueTodo: string;
     changeFilterTasksStatus: (value: FilterValuesType, todolistId: string) => void;
     removeTodolist: (id: string) => void;
     changeTodolistTitle: (id: string, newTitle: string) => void;
@@ -26,67 +26,77 @@ type TodolistItems = {
 };
 
 export function TodolistItems(props: TodolistItems) {
+    const {
+        todolistId,
+        titleValueTodo,
+        removeTodolist,
+        changeTodolistTitle,
+        filterTasksStatus
+    } = props
     const dispatch = useDispatch();
-    const tasks = useAppSelector(state => state.tasks.todos[props.todolistId]);
+    const tasks = useAppSelector(state => state.tasks.todos[todolistId]);
     const [titleTasks, setTitleTasks] = useState("")
     const handleAddTask = (titleTasks: string) => {
-        dispatch(addTaskAC(titleTasks, props.todolistId));
+        dispatch(addTask(titleTasks, todolistId));
     };
-    const removeTodolist = () => {
-        props.removeTodolist(props.todolistId);
+    const handeRemoveTodolist = () => {
+        removeTodolist(todolistId);
     };
-    const changeTodolistTitle = (titleTasks: string) => {
-        props.changeTodolistTitle(props.todolistId, titleTasks);
-    };
-
-    const removeTaskACHandler = (taskId: string) => {
-        dispatch(removeTask(taskId, props.todolistId));
+    const handleChangeTodolistTitle = (titleTasks: string) => {
+        changeTodolistTitle(todolistId, titleTasks);
     };
 
-    const toggleTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
-        dispatch(changeTaskStatus(taskId, newIsDoneValue, props.todolistId));
+    const handleRemoveTask = (taskId: string) => {
+        dispatch(removeTask(taskId, todolistId));
     };
 
-    const changeTasksTitle = (taskId: string, newValue: string) => {
-        dispatch(changeTaskTitle(taskId, newValue, props.todolistId));
+    const handleSwitchingTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
+        dispatch(changeTaskStatus(taskId, newIsDoneValue, todolistId));
+    };
+
+    const handleChangeTaskTitle = (taskId: string, newValue: string) => {
+        dispatch(changeTaskTitle(taskId, newValue, todolistId));
     };
     const filterTasksForTodolist = useMemo(() => {
         let filteredTasks = tasks;
-        if (props.filterTasksStatus === 'active') {
+        if (filterTasksStatus === 'active') {
             filteredTasks = tasks.filter(t => !t.isDone);
         }
-        if (props.filterTasksStatus === 'completed') {
+        if (filterTasksStatus === 'completed') {
             filteredTasks = tasks.filter(t => t.isDone);
         }
         return filteredTasks;
-    }, [tasks, props.filterTasksStatus]);
-    const handleDeleteTask =(taskId:string)=>{
-        removeTaskACHandler(taskId)
-    }
+    }, [tasks, filterTasksStatus]);
+
     return (
-        <div className={s.todoItemContainer}>
-            <div className={s.todoItemHeader}>
-                <div className={s.todolistsItemsIcons}>
-                    <EditableSpan valueTitleItem={props.titleTodo} onChange={changeTodolistTitle}/>
-                    <Button onClick={removeTodolist} size={'small'} variant={'icons'}>
-                        <Icon Svg={trash} width={18} height={18}/>
+        <div className={style.todoItemContainer}>
+            <div className={style.todoItemHeader}>
+                <div className={style.todolistsItemsIcons}>
+                    <EditableSpanValueTaskOrTodolist valueTitleItem={titleValueTodo}
+                                                     handleOnChangeValueTitleTodoOrTasks={handleChangeTodolistTitle}/>
+                    <Button onClick={handeRemoveTodolist} buttonSize={'small'} buttonVariations={'icons'}>
+                        <Icon Svg={TrashIcon} width={18} height={18}/>
                     </Button>
                 </div>
             </div>
             <div>
-                <HeaderControls addItem={handleAddTask} size={'small'} placeholder={'Write your task'} variant={'secondary'} titleValueAddItem={titleTasks} setTitleValueAddItem={setTitleTasks}/>
+                <TodosListHeaderControls addItemTodoOrTasks={handleAddTask} ButtonSize={'small'}
+                                         placeholderForInputElements={'Write your task'} ButtonVariations={'secondary'}
+                                         titleValueAddItem={titleTasks} setTitleValueAddItem={setTitleTasks}
+                                         inputSize={"small"}/>
             </div>
-            <div className={s.todolistsItems}>
+            <div className={style.todolistsItems}>
                 {filterTasksForTodolist.map(task => (
-                    <div key={task.id} className={`${s.tasksContainer} ${task.isDone ? s.completedTask : ""}`}>
-                        <div className={s.todolistsItemsIcons}>
-                            <CheckBox checked={task.isDone}
-                                      onChange={(e: ChangeEvent<HTMLInputElement>) => toggleTaskStatus(task.id, e.currentTarget.checked)}/>
-                            <div className={s.editTask}>
-                                <EditableSpan valueTitleItem={task.title}
-                                              onChange={(newValue: string) => changeTasksTitle(task.id, newValue)}/>
-                                <Button onClick={() => handleDeleteTask(task.id)} size={'small'} variant={'icons'}>
-                                    <Icon Svg={trash} width={18} height={18}/>
+                    <div key={task.id} className={`${style.tasksContainer} ${task.isDone ? style.completedTask : ""}`}>
+                        <div className={style.todolistsItemsIcons}>
+                            <Checkbox checked={task.isDone}
+                                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleSwitchingTaskStatus(task.id, e.currentTarget.checked)}/>
+                            <div className={style.editTask}>
+                                <EditableSpanValueTaskOrTodolist valueTitleItem={task.title}
+                                                                 handleOnChangeValueTitleTodoOrTasks={(newValue: string) => handleChangeTaskTitle(task.id, newValue)}/>
+                                <Button onClick={() => handleRemoveTask(task.id)} buttonSize={'small'}
+                                        buttonVariations={'icons'}>
+                                    <Icon Svg={TrashIcon} width={18} height={18}/>
                                 </Button>
                             </div>
                         </div>

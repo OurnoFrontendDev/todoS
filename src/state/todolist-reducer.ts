@@ -1,44 +1,18 @@
 import {v1} from 'uuid';
-import {FilterValuesType, TodolistType} from "../components/todolist/Todolist";
-
-const REMOVE_TODOLIST = 'REMOVE-TODOLIST'
-const ADD_TODOLIST = 'ADD-TODOLIST'
-const CHANGE_TODOLIST_TITLE = 'CHANGE-TODOLIST-TITLE'
-const CHANGE_TODOLIST_FILTER = 'CHANGE-TODOLIST-FILTER'
-const INIT_TODO_LIST = 'INIT-TODO-LIST'
-export type RemoveTodolistActionType = {
-    type: typeof REMOVE_TODOLIST,
-    id: string
-}
-export type AddTodolistActionType = {
-    type: typeof ADD_TODOLIST,
-    title: string
-    todolistId: string
-}
-export type ChangeTodolistTitleActionType = {
-    type: typeof CHANGE_TODOLIST_TITLE,
-    id: string
-    title: string
-}
-export type ChangeTodolistFilterActionType = {
-    type: typeof CHANGE_TODOLIST_FILTER,
-    filter: FilterValuesType
-}
-type initialTodoListType = {
-    type: typeof INIT_TODO_LIST
-    payload: TodolistType[]
-}
-
-type ActionsType =
+import  {TodolistType} from "../components/todolist/Todolist";
+import {FilterValuesType} from "../components/header/FilterSelectTaskStatusProps";
+import {
+    ActionsType,
+    AddTodolistActionType,
+    ChangeTodolistFilterActionType,
+    ChangeTodolistTitleActionType,
     RemoveTodolistActionType
-    | AddTodolistActionType
-    | ChangeTodolistTitleActionType
-    | ChangeTodolistFilterActionType
-    | initialTodoListType
+} from "../types/actionCreatorForTodoTypes";
+
 
 
 const initialState: Array<TodolistType> = []
-export const todolistsReducer = (state: TodolistType[] = initialState, action: ActionsType): Array<TodolistType> => {
+export const todolistReducer = (state: TodolistType[] = initialState, action: ActionsType): Array<TodolistType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id != action.id)
@@ -58,6 +32,7 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
             return state.map(el => ({...el, filter: action.filter}))
         }
         case 'INIT-TODO-LIST': {
+            debugger
             return action.payload
         }
         default:
@@ -76,4 +51,11 @@ export const changeTodolistTitle = (id: string, title: string): ChangeTodolistTi
 export const changeTodolistFilter = (filter: FilterValuesType): ChangeTodolistFilterActionType => {
     return {type: 'CHANGE-TODOLIST-FILTER', filter: filter}
 }
+export const initTodoList = (payload:TodolistType[]) => {
+    return {
+        type: "INIT_TODO_LIST",
+        payload: payload
+    };
+};
+
 
