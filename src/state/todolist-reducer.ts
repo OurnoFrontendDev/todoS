@@ -1,14 +1,12 @@
 import {v1} from 'uuid';
-import  {TodolistType} from "../components/todolist/Todolist";
+import {TodolistType} from "../components/todolist/Todolist";
 import {FilterValuesType} from "../components/header/FilterSelectTaskStatusProps";
 import {
     AddTodolistActionType,
     ChangeTodolistFilterActionType,
     ChangeTodolistTitleActionType,
     RemoveTodolistActionType, typesForTodosActionCreator
-} from "../types/types";
-
-
+} from "../types/actionType/types";
 
 const initialState: Array<TodolistType> = []
 export const todolistReducer = (state: TodolistType[] = initialState, action: typesForTodosActionCreator): Array<TodolistType> => {
@@ -49,7 +47,7 @@ export const changeTodolistTitle = (id: string, title: string): ChangeTodolistTi
 export const changeTodolistFilter = (filter: FilterValuesType): ChangeTodolistFilterActionType => {
     return {type: 'CHANGE-TODOLIST-FILTER', filter: filter}
 }
-export const initTodoList = (payload:TodolistType[]) => {
+export const initTodoList = (payload: TodolistType[]) => {
     return {
         type: "INIT_TODO_LIST",
         payload: payload

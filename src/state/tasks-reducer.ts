@@ -1,7 +1,7 @@
 import {v1} from 'uuid';
 import {TaskType} from "../todolistItems/TodolistItems";
 import {TasksStateType} from "../components/todolist/Todolist";
-import {typesForTasksActionCreator} from "../types/types";
+import {typesForTasksActionCreator} from "../types/actionType/types";
 
 export const initialState: TasksStateType = {
     todos: {},
@@ -9,7 +9,6 @@ export const initialState: TasksStateType = {
     addedTotal: 0,
     deletedTotal: 0
 };
-
 
 export const tasksReducer = (state: TasksStateType = initialState, action: typesForTasksActionCreator): TasksStateType => {
     switch (action.type) {
