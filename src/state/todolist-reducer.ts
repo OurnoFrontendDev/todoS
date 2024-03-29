@@ -7,7 +7,7 @@ import {
     ChangeTodolistFilterActionType,
     ChangeTodolistTitleActionType,
     RemoveTodolistActionType
-} from "../types/actionCreatorForTodoTypes";
+} from "../types/typesForTodoActionCreator";
 
 
 

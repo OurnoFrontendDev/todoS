@@ -1,7 +1,7 @@
 import {v1} from 'uuid';
 import {TaskType} from "../todolistItems/TodolistItems";
 import {TasksStateType} from "../components/todolist/Todolist";
-import {ActionsType, initialState} from "../types/actionCreatorForTasksTypes";
+import {ActionsType, initialState} from "../types/typesForTasksActionCreator";
 
 
 
