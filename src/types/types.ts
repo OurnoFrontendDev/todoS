@@ -1,8 +1,8 @@
 import {TaskType} from "../todolistItems/TodolistItems";
-import {AddTodolistActionType, RemoveTodolistActionType} from "../state/todolist-reducer";
-import {TasksStateType} from "../components/todolist/Todolist";
+import {FilterValuesType} from "../components/header/FilterSelectTaskStatusProps";
+import {TodolistType} from "../components/todolist/Todolist";
 
-export type ActionsType =
+export type typesForTasksActionCreator =
     removeTaskActionCreatorType
     | addTasksActionCreatorType
     | changeTaskStatusActionCreatorType
@@ -11,6 +11,7 @@ export type ActionsType =
     | initialTasksType
     | RemoveTodolistActionType
     | AddTodolistActionType
+
 export const REMOVE_TASKS = "REMOVE-TASK"
 export const ADD_TASKS = "ADD-TASKS"
 export const CHANGE_TASK_STATUS = 'CHANGE-TASK-STATUS'
@@ -47,11 +48,37 @@ export type  changeTaskTitleActionCreatorType = {
     title: string
     todolistId: string
 }
+export type typesForTodosActionCreator =
+    RemoveTodolistActionType
+    | AddTodolistActionType
+    | ChangeTodolistTitleActionType
+    | ChangeTodolistFilterActionType
+    | initialTodoListType
 
-
-export const initialState: TasksStateType = {
-    todos: {},
-    addedNow: 0,
-    addedTotal: 0,
-    deletedTotal: 0
-};
+export const REMOVE_TODOLIST = 'REMOVE-TODOLIST'
+export const ADD_TODOLIST = 'ADD-TODOLIST'
+export const CHANGE_TODOLIST_TITLE = 'CHANGE-TODOLIST-TITLE'
+export const CHANGE_TODOLIST_FILTER = 'CHANGE-TODOLIST-FILTER'
+export const INIT_TODO_LIST = 'INIT-TODO-LIST'
+export type RemoveTodolistActionType = {
+    type: typeof REMOVE_TODOLIST,
+    id: string
+}
+export type AddTodolistActionType = {
+    type: typeof ADD_TODOLIST,
+    title: string
+    todolistId: string
+}
+export type ChangeTodolistTitleActionType = {
+    type: typeof CHANGE_TODOLIST_TITLE,
+    id: string
+    title: string
+}
+export type ChangeTodolistFilterActionType = {
+    type: typeof CHANGE_TODOLIST_FILTER,
+    filter: FilterValuesType
+}
+export type initialTodoListType = {
+    type: typeof INIT_TODO_LIST
+    payload: TodolistType[]
+}

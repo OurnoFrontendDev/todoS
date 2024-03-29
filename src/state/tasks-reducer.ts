@@ -1,11 +1,17 @@
 import {v1} from 'uuid';
 import {TaskType} from "../todolistItems/TodolistItems";
 import {TasksStateType} from "../components/todolist/Todolist";
-import {ActionsType, initialState} from "../types/typesForTasksActionCreator";
+import {typesForTasksActionCreator} from "../types/types";
+
+export const initialState: TasksStateType = {
+    todos: {},
+    addedNow: 0,
+    addedTotal: 0,
+    deletedTotal: 0
+};
 
 
-
-export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialState, action: typesForTasksActionCreator): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             const updatedTodos = state.todos[action.todolistId].filter(el => el.id !== action.taskId);
@@ -82,7 +88,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             };
         }
         case "INIT-TASKS": {
-            debugger
             return {todos: action.payload}
         }
         default:
@@ -105,9 +110,7 @@ export const deleteAllTasks = () => {
     return {type: 'DELETE-ALL-TASKS'}
 }
 export const initTasks = (payload: TasksStateType) => {
-    debugger
     return {type: "INIT-TASKS", payload: payload}
 }
-console.log(initTasks)
 
 

@@ -59,13 +59,11 @@ export const Todolist = () => {
         const savedTasks = localStorage.getItem("tasks")
         if (savedTodoLists) {
             const parsedSavedTodolist: TodolistType[] = JSON.parse(savedTodoLists)
-            console.log(parsedSavedTodolist)
             if (parsedSavedTodolist.length) {
                 dispatch(initTodoList(parsedSavedTodolist))
             }
             if (savedTasks) {
                 const parsedSavedTasks: TasksStateType = JSON.parse(savedTasks)
-                console.log(parsedSavedTasks)
                 if (Object.keys(parsedSavedTasks).length) {
                     dispatch(initTasks(parsedSavedTasks))
                 }

@@ -2,17 +2,16 @@ import {v1} from 'uuid';
 import  {TodolistType} from "../components/todolist/Todolist";
 import {FilterValuesType} from "../components/header/FilterSelectTaskStatusProps";
 import {
-    ActionsType,
     AddTodolistActionType,
     ChangeTodolistFilterActionType,
     ChangeTodolistTitleActionType,
-    RemoveTodolistActionType
-} from "../types/typesForTodoActionCreator";
+    RemoveTodolistActionType, typesForTodosActionCreator
+} from "../types/types";
 
 
 
 const initialState: Array<TodolistType> = []
-export const todolistReducer = (state: TodolistType[] = initialState, action: ActionsType): Array<TodolistType> => {
+export const todolistReducer = (state: TodolistType[] = initialState, action: typesForTodosActionCreator): Array<TodolistType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id != action.id)
@@ -32,7 +31,6 @@ export const todolistReducer = (state: TodolistType[] = initialState, action: Ac
             return state.map(el => ({...el, filter: action.filter}))
         }
         case 'INIT-TODO-LIST': {
-            debugger
             return action.payload
         }
         default:
