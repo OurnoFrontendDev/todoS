@@ -45,14 +45,13 @@ export const Todolist = () => {
     const todoLists = useSelector<RootState, TodolistType[]>(state => state.todolists);
     const tasks = useAppSelector(state => state.tasks.todos)
 
+    const {isDark} = useTheme();
+
     const [modalActiveAddTask, setModalActiveAddTask] = useState<boolean | undefined>(false)
     const [isErrorModalActive, setIsErrorModalActive] = useState(false)
-
     const [titleValueAddItemTaskOrTodo, setTitleValueAddItemTaskOrTodo] = useState("")
-
     const [isStartShakeElementsInputOrToggle, setIsStartShakeElementsInputOrToggle] = useState(false);
 
-    const {isDark} = useTheme();
     useEffect(() => {
 
         const savedTodoLists = localStorage.getItem("todoLists")
@@ -114,14 +113,14 @@ export const Todolist = () => {
                         withFilterSelectTaskStatus
                         ButtonSize={'large'}
                         withSwitchTheme
-                        isShake={isStartShakeElementsInputOrToggle}
+                        isStartShakeElementsInputOrToggle={isStartShakeElementsInputOrToggle}
                         setIsStartShakeElementsInputOrToggle={setIsStartShakeElementsInputOrToggle}
                         isModalVisibleAddTask={modalActiveAddTask}
                         setIsModalVisibleAddTask={setModalActiveAddTask}
                         placeholderForInputElements={'Search note...'}
                         ButtonVariations={'primary'}
-                        titleValueAddItem={titleValueAddItemTaskOrTodo}
-                        setTitleValueAddItem={setTitleValueAddItemTaskOrTodo}
+                        titleValueAddItemTodoOrTasks={titleValueAddItemTaskOrTodo}
+                        setTitleValueAddItemTodoOrTasks={setTitleValueAddItemTaskOrTodo}
                         inputSize={"large"}
                     />
                 </div>

@@ -19,7 +19,7 @@ type TodosListHeaderControlsProps = {
     handleChangeValueFilterTodo?: (value?: FilterValuesType) => void;
     withSwitchTheme?: boolean;
     setIsStartShakeElementsInputOrToggle?: ToggleFunction;
-    isShake?: boolean;
+    isStartShakeElementsInputOrToggle?: boolean;
     className?: string;
     placeholderForInputElements: string;
     isModalVisibleAddTask?: boolean ;
@@ -27,8 +27,8 @@ type TodosListHeaderControlsProps = {
     withErrorModal?: boolean
     ButtonSize: ButtonSize
     ButtonVariations: ButtonVariations;
-    titleValueAddItem: string
-    setTitleValueAddItem: (titleValueAddItem: string) => void
+    titleValueAddItemTodoOrTasks: string
+    setTitleValueAddItemTodoOrTasks: (titleValueAddItemTodoOrTasks: string) => void
     inputSize:InputSize
 }
 export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (props) => {
@@ -38,44 +38,44 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
         handleChangeValueFilterTodo,
         withSwitchTheme,
         setIsStartShakeElementsInputOrToggle,
-        isShake,
+        isStartShakeElementsInputOrToggle,
         placeholderForInputElements,
         isModalVisibleAddTask,
         setIsModalVisibleAddTask,
         ButtonSize,
-        setTitleValueAddItem,
+        setTitleValueAddItemTodoOrTasks,
         ButtonVariations,
-        titleValueAddItem,
+        titleValueAddItemTodoOrTasks,
         inputSize
     }: TodosListHeaderControlsProps = props;
 
     const {isDark, setIsDark} = useTheme()
     const addItemTodoOrTaskCallBack = () => {
-        if (titleValueAddItem.trim() !== "") {
-            addItemTodoOrTasks(titleValueAddItem);
-            setTitleValueAddItem("");
+        if (titleValueAddItemTodoOrTasks.trim() !== "") {
+            addItemTodoOrTasks(titleValueAddItemTodoOrTasks);
+            setTitleValueAddItemTodoOrTasks("");
         } else {
-            StartShakeElementsInputOrToggle();
+            handleStartShakeElementsInputOrToggle();
             setIsModalVisibleAddTask?.(true)
         }
     }
-    const StartShakeElementsInputOrToggle = () => {
+    const handleStartShakeElementsInputOrToggle = () => {
         setIsStartShakeElementsInputOrToggle?.(true);
         setTimeout(() => {
             setIsStartShakeElementsInputOrToggle?.(false);
         }, 500);
     };
-    const onChangeHandlerValueAddItem = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitleValueAddItem(e.currentTarget.value)
+    const onChangeHandlerValueAddItemTodoOrTask = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitleValueAddItemTodoOrTasks(e.currentTarget.value)
     }
-    const onKeyPressHandlerItemInputValue = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyPressHandlerItemInputValueTodoOrTask = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             addItemTodoOrTaskCallBack();
         }
     }
     const inputClassName = classNames(
         style.header,
-        {[style.shake]: isShake},
+        {[style.shake]: isStartShakeElementsInputOrToggle},
         isDark ? style.switchThemeDark : style.switchThemeLight
     )
 
@@ -84,9 +84,9 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
 
     return (
         <div className={inputClassName}>
-            <InputDisplayForTaskOrTodo value={titleValueAddItem}
-                                       handleOnChangeValueTitleTodoOrTasksOfInput={onChangeHandlerValueAddItem}
-                                       handleOnKeyDownValueTitleTodoOrTasksOfInput={onKeyPressHandlerItemInputValue}
+            <InputDisplayForTaskOrTodo value={titleValueAddItemTodoOrTasks}
+                                       handleOnChangeValueTitleTodoOrTasksOfInput={onChangeHandlerValueAddItemTodoOrTask}
+                                       handleOnKeyDownValueTitleTodoOrTasksOfInput={onKeyPressHandlerItemInputValueTodoOrTask}
                                        placeholderForInput={placeholderForInputElements}
                                        inputSize={inputSize}
             />

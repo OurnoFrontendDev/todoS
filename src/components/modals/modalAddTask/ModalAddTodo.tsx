@@ -12,7 +12,6 @@ type ModalAddTodoProps = {
     cancelText: string
     okText: string
     handlerAddTodo: (title: string) => void
-    toggle?: (isShake: boolean) => void
 }
 export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
     const {isActiveModalAddTodo,
@@ -20,7 +19,7 @@ export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
         cancelText,
         okText,
         handlerAddTodo,
-        toggle} = props
+        } = props
     const [titleValueTodo, setTitleValueTodo] = useState("")
     const [displayValueTitleTodo, setDisplayValueTitleTodo] = useState("New Note");
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,24 +31,18 @@ export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
             handlerAddTodo(titleValueTodo);
             setTitleValueTodo("");
         } else {
-            handleStartShake();
         }
         setIsActiveModalAddTodo?.(false)
     }
-    const handleStartShake = () => {
-        toggle?.(true);
-        setTimeout(() => {
-            toggle?.(false);
-        }, 500);
-    };
-    const activeModalAddTodo = () => setIsActiveModalAddTodo?.(false)
+
+    const handleIsActiveModalAddTodo = () => setIsActiveModalAddTodo?.(false)
 
     const modalAddTodoStyleClass = classNames(style.modal, {
         [style.active]: isActiveModalAddTodo
     });
     const portalAddModalTodo = usePortal("modalAddTodo");
     return createPortal(
-        <div className={modalAddTodoStyleClass} onClick={activeModalAddTodo}>
+        <div className={modalAddTodoStyleClass} onClick={handleIsActiveModalAddTodo}>
             <div className={style.modal__content} onClick={e => e.stopPropagation()}>
                 <div className={style.contantInner}>
                     <div className={style.text__clue__container}>
@@ -60,7 +53,7 @@ export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
                                                placeholderForInput={"Input your note..."} inputSize={"extraLarge"}/>
                 </div>
                 <div className={style.buttons}>
-                    <Button onClick={activeModalAddTodo} buttonSize={"extraLarge"}>
+                    <Button onClick={handleIsActiveModalAddTodo} buttonSize={"extraLarge"}>
                         {okText}
                     </Button>
                     <Button onClick={onAddTodo} buttonSize={"extraLarge"}>

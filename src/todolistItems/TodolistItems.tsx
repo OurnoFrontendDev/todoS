@@ -82,7 +82,7 @@ export function TodolistItems(props: TodolistItems) {
             <div>
                 <TodosListHeaderControls addItemTodoOrTasks={handleAddTask} ButtonSize={'small'}
                                          placeholderForInputElements={'Write your task'} ButtonVariations={'secondary'}
-                                         titleValueAddItem={titleTasks} setTitleValueAddItem={setTitleTasks}
+                                         titleValueAddItemTodoOrTasks={titleTasks} setTitleValueAddItemTodoOrTasks={setTitleTasks}
                                          inputSize={"small"}/>
             </div>
             <div className={style.todolistsItems}>

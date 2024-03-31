@@ -21,11 +21,11 @@ export const Button: React.FC<ButtonProps> = (props) => {
         large: style.largeButton,
         small: style.smallButton
     }
-    const buttonVariantToClassNameMap: Record<ButtonVariations, string> = {
+    const buttonVariationsToClassNameMap: Record<ButtonVariations, string> = {
         primary: style.primary,
         secondary: style.secondary,
         icons: style.icons,
     }
-    const classNamesButton = classNames(className, style.button, buttonSizeToClassNameMap[buttonSize], buttonVariations ? buttonVariantToClassNameMap[buttonVariations] : "")
+    const classNamesButton = classNames(className, style.button, buttonSizeToClassNameMap[buttonSize], buttonVariations ? buttonVariationsToClassNameMap[buttonVariations] : "")
     return (<button onClick={onClick} className={classNamesButton}>{children}</button>);
 };
