@@ -55,11 +55,11 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
             addItemTodoOrTasks(titleValueAddItem);
             setTitleValueAddItem("");
         } else {
-            startShake();
+            StartShakeElementsInputOrToggle();
             setIsModalVisibleAddTask?.(true)
         }
     }
-    const startShake = () => {
+    const StartShakeElementsInputOrToggle = () => {
         setIsStartShakeElementsInputOrToggle?.(true);
         setTimeout(() => {
             setIsStartShakeElementsInputOrToggle?.(false);
