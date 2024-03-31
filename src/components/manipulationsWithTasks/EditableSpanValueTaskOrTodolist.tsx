@@ -5,18 +5,18 @@ import {Icon} from "../svg/SvgLoader";
 import PencilIcon from '/src/img/PencilEdit.svg'
 
 type EditableSpanProps = {
-    valueTitleItem: string
+    valueTitleItemTodoOrTask: string
     handleOnChangeValueTitleTodoOrTasks: (valueTitleItem: string) => void
 }
 
 export const EditableSpanValueTaskOrTodolist:React.FC<EditableSpanProps>=(props)=> {
-    const {valueTitleItem,handleOnChangeValueTitleTodoOrTasks}=props
+    const {valueTitleItemTodoOrTask,handleOnChangeValueTitleTodoOrTasks}=props
     const [isActivationModeEditingValueTasksOrTodolist , setIsActivationModeEditingValueTasksOrTodolist ] = useState(false);
-    const [itemValueTaskOrTodolistText, setItemValueTaskOrTodolistText] = useState(valueTitleItem);
+    const [itemValueTaskOrTodolistText, setItemValueTaskOrTodolistText] = useState(valueTitleItemTodoOrTask);
 
     const handleToggleEdit = () => {
         setIsActivationModeEditingValueTasksOrTodolist (true);
-        setItemValueTaskOrTodolistText(valueTitleItem);
+        setItemValueTaskOrTodolistText(valueTitleItemTodoOrTask);
     }
     const handleToggleViewMode = () => {
         setIsActivationModeEditingValueTasksOrTodolist (false);
@@ -32,7 +32,7 @@ export const EditableSpanValueTaskOrTodolist:React.FC<EditableSpanProps>=(props)
         <>
             {isActivationModeEditingValueTasksOrTodolist
                 ? <input value={itemValueTaskOrTodolistText} onChange={handleChangeEditTaskOrTodoText} autoFocus onBlur={handleToggleViewMode}/>
-                : <span onDoubleClick={handleToggleEdit} className={s.editTaskOrTodoTitle}>{valueTitleItem}</span>
+                : <span onDoubleClick={handleToggleEdit} className={s.editTaskOrTodoTitle}>{valueTitleItemTodoOrTask}</span>
             }
             <Button onClick={activationEditingModeValueTaskOrTodoText  } buttonSize={"small"} buttonVariations={"icons"}>
                 <Icon Svg={PencilIcon} width={15} height={15}/>

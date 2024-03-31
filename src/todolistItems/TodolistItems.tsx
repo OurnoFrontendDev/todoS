@@ -72,7 +72,7 @@ export function TodolistItems(props: TodolistItems) {
         <div className={style.todoItemContainer}>
             <div className={style.todoItemHeader}>
                 <div className={style.todolistsItemsIcons}>
-                    <EditableSpanValueTaskOrTodolist valueTitleItem={titleValueTodo}
+                    <EditableSpanValueTaskOrTodolist valueTitleItemTodoOrTask={titleValueTodo}
                                                      handleOnChangeValueTitleTodoOrTasks={handleChangeTodolistTitle}/>
                     <Button onClick={handeRemoveTodolist} buttonSize={'small'} buttonVariations={'icons'}>
                         <Icon Svg={TrashIcon} width={18} height={18}/>
@@ -92,7 +92,7 @@ export function TodolistItems(props: TodolistItems) {
                             <Checkbox checked={task.isDone}
                                       onChange={(e: ChangeEvent<HTMLInputElement>) => handleSwitchingTaskStatus(task.id, e.currentTarget.checked)}/>
                             <div className={style.editTask}>
-                                <EditableSpanValueTaskOrTodolist valueTitleItem={task.title}
+                                <EditableSpanValueTaskOrTodolist valueTitleItemTodoOrTask={task.title}
                                                                  handleOnChangeValueTitleTodoOrTasks={(newValue: string) => handleChangeTaskTitle(task.id, newValue)}/>
                                 <Button onClick={() => handleRemoveTask(task.id)} buttonSize={'small'}
                                         buttonVariations={'icons'}>
