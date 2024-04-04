@@ -1,7 +1,5 @@
 import {v1} from 'uuid';
-import {TaskType} from "../todolistItems/TodolistItems";
-import {TasksStateType} from "../components/todolist/Todolist";
-import {typesForTasksActionCreator} from "../types/actionType/types";
+import {TasksStateType, TaskType, typesForTasksActionCreator} from "../types/actionType/types";
 
 export const initialState: TasksStateType = {
     todos: {},
@@ -93,23 +91,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: types
             return state;
     }
 }
-export const removeTask = (taskId: string, todolistId: string) => {
-    return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId}
-}
-export const addTask = (title: string, todolistId: string) => {
-    return {type: 'ADD-TASKS', title, todolistId}
-}
-export const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
-    return {type: 'CHANGE-TASK-STATUS', isDone, todolistId, taskId}
-}
-export const changeTaskTitle = (taskId: string, title: string, todolistId: string) => {
-    return {type: 'CHANGE-TASK-TITLE', title, todolistId, taskId}
-}
-export const deleteAllTasks = () => {
-    return {type: 'DELETE-ALL-TASKS'}
-}
-export const initTasks = (payload: TasksStateType) => {
-    return {type: "INIT-TASKS", payload: payload}
-}
+
 
 

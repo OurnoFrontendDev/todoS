@@ -9,6 +9,7 @@
   font-family: 'Kanit', sans-serif;
   margin-top: 44px;
 }
+
 .textContainer {
   display: flex;
   justify-content: center;
@@ -23,9 +24,10 @@
     margin-left: 71px;
     font-family: "Kanit", sans-serif;
     margin-top: 32px;
-    line-height: 1.25; // или любое другое необходимое значение
+    line-height: 1.25;
   }
 }
+
 .header__block {
   width: 800px;
   display: flex;
@@ -39,11 +41,21 @@
   display: flex;
   flex-direction: row;
 }
-.todoContainer{
+
+.todoContainer {
   width: 798px;
   height: 700px;
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
+  justify-content: center;
   margin-right: 70px;
+}
+
+.addButton{
+  position: fixed;
+  width: 49px;
+  height: 50px;
+  border-radius: 29px;
+  bottom: 347px;
+  right: 600px;
 }

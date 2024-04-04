@@ -1,10 +1,8 @@
 import React, {createContext, Dispatch, ReactNode, SetStateAction, useMemo, useState} from "react";
 
-type TypeSetState<T> = Dispatch<SetStateAction<T>>
-
 interface ThemeContextType {
-    isDark: boolean
-    setIsDark?: TypeSetState<boolean>
+    isDark: boolean;
+    setIsDark?: Dispatch<SetStateAction<boolean>>;
 }
 
 type ThemeProviderProps = {

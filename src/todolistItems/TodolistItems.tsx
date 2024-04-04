@@ -1,24 +1,21 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useAppSelector} from '../state/store';
-import {addTask, changeTaskStatus, changeTaskTitle, removeTask} from '../state/tasks-reducer';
 import {Icon} from '../components/svg/SvgLoader';
-import TrashIcon from '/src/img/trasher.svg';
+import DeletingTodoOrTaskIcon from '/src/img/DeletingTodoOrTaskIcon.svg';
 import style from '/src/todolistItems/todolistItem.module.scss';
-import {EditableSpanValueTaskOrTodolist} from "../components/manipulationsWithTasks/EditableSpanValueTaskOrTodolist";
+import {InputTaskOrTodoListEditing} from "../components/manipulationsWithTasks/InputTaskOrTodoListEditing";
 import {Button} from "../components/button/Button";
-import {TodosListHeaderControls} from "../components/header/TodosListHeaderControlsProps";
-import {Checkbox} from "../components/checkBox/Checkbox";
-import {FilterValuesType} from "../components/header/FilterSelectTaskStatusProps";
+import {TodosListHeaderControls} from "../components/header/TodosListHeaderControls";
+import {Checkbox} from "../components/checkbox/Checkbox";
+import {FilterValuesType} from "../components/header/FilterSelectTaskStatus";
+import classNames from "classnames";
+import {addTask, changeTaskStatus, changeTaskTitle, removeTask} from "../state/actions";
 
-export type TaskType = {
-    id: string;
-    title: string;
-    isDone: boolean;
-};
+
 type TodolistItems = {
     todolistId: string;
-    titleValueTodo: string;
+    todoTitleValue: string;
     changeFilterTasksStatus: (value: FilterValuesType, todolistId: string) => void;
     removeTodolist: (id: string) => void;
     changeTodolistTitle: (id: string, newTitle: string) => void;
@@ -28,35 +25,41 @@ type TodolistItems = {
 export function TodolistItems(props: TodolistItems) {
     const {
         todolistId,
-        titleValueTodo,
+        todoTitleValue,
         removeTodolist,
         changeTodolistTitle,
         filterTasksStatus
     } = props
+
     const dispatch = useDispatch();
     const tasks = useAppSelector(state => state.tasks.todos[todolistId]);
+
     const [titleTasks, setTitleTasks] = useState("")
+
     const handleAddTask = (titleTasks: string) => {
         dispatch(addTask(titleTasks, todolistId));
     };
+
     const handeRemoveTodolist = () => {
         removeTodolist(todolistId);
     };
-    const handleChangeTodolistTitle = (titleTasks: string) => {
+
+    const handleChangeTodoListTitle = (titleTasks: string) => {
         changeTodolistTitle(todolistId, titleTasks);
     };
 
-    const handleRemoveTask = (taskId: string) => {
+    const handleRemoveTask = (taskId: string) => () => {
         dispatch(removeTask(taskId, todolistId));
     };
 
-    const handleSwitchingTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
-        dispatch(changeTaskStatus(taskId, newIsDoneValue, todolistId));
-    };
+    const handleSwitchingTaskStatus = (taskId: string) => (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeTaskStatus(taskId, e.currentTarget.checked, todolistId));
+    }
 
-    const handleChangeTaskTitle = (taskId: string, newValue: string) => {
+    const handleChangeTaskTitle = (taskId: string) => (newValue: string) => {
         dispatch(changeTaskTitle(taskId, newValue, todolistId));
-    };
+    }
+
     const filterTasksForTodolist = useMemo(() => {
         let filteredTasks = tasks;
         if (filterTasksStatus === 'active') {
@@ -72,36 +75,47 @@ export function TodolistItems(props: TodolistItems) {
         <div className={style.todoItemContainer}>
             <div className={style.todoItemHeader}>
                 <div className={style.todolistsItemsIcons}>
-                    <EditableSpanValueTaskOrTodolist valueTitleItemTodoOrTask={titleValueTodo}
-                                                     handleOnChangeValueTitleTodoOrTasks={handleChangeTodolistTitle}/>
-                    <Button onClick={handeRemoveTodolist} buttonSize={'small'} buttonVariations={'icons'}>
-                        <Icon Svg={TrashIcon} width={18} height={18}/>
+                    <InputTaskOrTodoListEditing valueTitleTodoOrTask={todoTitleValue}
+                                                handleOnChangeTitleTodoOrTasks={handleChangeTodoListTitle}/>
+                    <Button onClick={handeRemoveTodolist} buttonSize={'small'} buttonVariant={'icons'}>
+                        <Icon Svg={DeletingTodoOrTaskIcon} width={18} height={18}/>
                     </Button>
                 </div>
             </div>
             <div>
-                <TodosListHeaderControls addItemTodoOrTasks={handleAddTask} ButtonSize={'small'}
-                                         placeholderForInputElements={'Write your task'} ButtonVariations={'secondary'}
-                                         titleValueAddItemTodoOrTasks={titleTasks} setTitleValueAddItemTodoOrTasks={setTitleTasks}
-                                         inputSize={"small"}/>
+                <TodosListHeaderControls addTodoOrTodoList={handleAddTask} buttonSize={'small'}
+                                         inputPlaceholder={'Write your task'} buttonVariant={'secondary'}
+                                         titleValueAddItemTodoOrTasks={titleTasks}
+                                         setTitleValueAddItemTodoOrTasks={setTitleTasks}
+                                         inputSizeAddTodoOrTask={"small"}/>
             </div>
             <div className={style.todolistsItems}>
-                {filterTasksForTodolist.map(task => (
-                    <div key={task.id} className={`${style.tasksContainer} ${task.isDone ? style.completedTask : ""}`}>
-                        <div className={style.todolistsItemsIcons}>
-                            <Checkbox checked={task.isDone}
-                                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleSwitchingTaskStatus(task.id, e.currentTarget.checked)}/>
-                            <div className={style.editTask}>
-                                <EditableSpanValueTaskOrTodolist valueTitleItemTodoOrTask={task.title}
-                                                                 handleOnChangeValueTitleTodoOrTasks={(newValue: string) => handleChangeTaskTitle(task.id, newValue)}/>
-                                <Button onClick={() => handleRemoveTask(task.id)} buttonSize={'small'}
-                                        buttonVariations={'icons'}>
-                                    <Icon Svg={TrashIcon} width={18} height={18}/>
-                                </Button>
+                {filterTasksForTodolist.map(task => {
+                    const taskStyles = classNames(
+                        style.tasksContainer,
+                        {
+                            [style.completedTask]: task.isDone
+                        }
+                    );
+                    return (
+                        (
+                            <div key={task.id} className={taskStyles}>
+                                <div className={style.todolistsItemsIcons}>
+                                    <Checkbox checked={task.isDone}
+                                              onChange={handleSwitchingTaskStatus(task.id)}/>
+                                    <div className={style.editTask}>
+                                        <InputTaskOrTodoListEditing valueTitleTodoOrTask={task.title}
+                                                                    handleOnChangeTitleTodoOrTasks={handleChangeTaskTitle(task.id)}/>
+                                        <Button onClick={handleRemoveTask(task.id)} buttonSize={'small'}
+                                                buttonVariant={'icons'}>
+                                            <Icon Svg={DeletingTodoOrTaskIcon} width={18} height={18}/>
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                ))}
+                        )
+                    )
+                })}
             </div>
         </div>
     );

@@ -1,6 +1,4 @@
-import {TaskType} from "../../todolistItems/TodolistItems";
-import {FilterValuesType} from "../../components/header/FilterSelectTaskStatusProps";
-import {TodolistType} from "../../components/todolist/Todolist";
+import {FilterValuesType} from "../../components/header/FilterSelectTaskStatus";
 import {
     ADD_TASKS,
     ADD_TODOLIST, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE,
@@ -9,6 +7,12 @@ import {
     INIT_TODO_LIST, REMOVE_TASKS,
     REMOVE_TODOLIST
 } from "../../state/constans";
+
+export type TaskType = {
+    id: string;
+    title: string;
+    isDone: boolean;
+}
 
 export type typesForTasksActionCreator =
     removeTaskActionCreatorType
@@ -88,3 +92,20 @@ export type initialTodoListType = {
     type: typeof INIT_TODO_LIST
     payload: TodolistType[]
 }
+export type TodolistType = {
+    id: string;
+    title: string;
+    filter: FilterValuesType;
+};
+
+export type CounterType = {
+    addedNow?: number;
+    addedTotal?: number;
+    deletedTotal?: number;
+};
+
+export type TasksStateType = {
+    todos: {
+        [key: string]: TaskType[];
+    };
+} & CounterType;

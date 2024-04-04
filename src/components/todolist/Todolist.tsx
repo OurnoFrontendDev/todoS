@@ -1,44 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, useAppSelector} from '../../state/store';
-import {
-    addTodolist,
-    changeTodolistFilter,
-    changeTodolistTitle, initTodoList,
-    removeTodolist
-} from '../../state/todolist-reducer';
 import {TodosCounter} from '../todosCounter/TodosCounter';
-import {TaskType, TodolistItems} from '../../todolistItems/TodolistItems';
+import {TodolistItems} from '../../todolistItems/TodolistItems';
 import style from './todolistStyles.module.scss';
 import {DeleteTasksToggle} from '../toggle/DeleteTasksToggle';
-import DetectiveLight from '../../img/DetectiveLight.svg';
+import DetectiveLight from '../../img/DarkModelIcon.svg';
 import DetectiveDark from '../../img/DetectiveDark.svg';
 import {Icon} from '../svg/SvgLoader';
 import {useTheme} from '../../hooks/useTheme';
 import {ModalError} from "../modals/modalError/ModalError";
-import {TodosListHeaderControls} from "../header/TodosListHeaderControlsProps";
+import {TodosListHeaderControls} from "../header/TodosListHeaderControls";
 import classNames from "classnames";
-import {FilterValuesType} from "../header/FilterSelectTaskStatusProps";
-import {initTasks} from "../../state/tasks-reducer";
-
-
-export type TodolistType = {
-    id: string;
-    title: string;
-    filter: FilterValuesType;
-};
-
-export type CounterType = {
-    addedNow?: number;
-    addedTotal?: number;
-    deletedTotal?: number;
-};
-
-export type TasksStateType = {
-    todos: {
-        [key: string]: TaskType[];
-    };
-} & CounterType;
+import {FilterValuesType} from "../header/FilterSelectTaskStatus";
+import {TasksStateType,  TodolistType} from "../../types/actionType/types";
+import {
+    addTodolist,
+    changeTodolistFilter,
+    changeTodolistTitle,
+    initTasks,
+    initTodoList,
+    removeTodolist
+} from "../../state/actions";
 
 export const Todolist = () => {
     const dispatch = useDispatch();
@@ -50,7 +33,7 @@ export const Todolist = () => {
     const [modalActiveAddTask, setModalActiveAddTask] = useState<boolean | undefined>(false)
     const [isErrorModalActive, setIsErrorModalActive] = useState(false)
     const [titleValueAddItemTaskOrTodo, setTitleValueAddItemTaskOrTodo] = useState("")
-    const [isStartShakeElementsInputOrToggle, setIsStartShakeElementsInputOrToggle] = useState(false);
+    const [isStartShakeElementsInputOrToggle, setIsStartShakeInputOrDeletingTasksToggle] = useState(false);
 
     useEffect(() => {
 
@@ -75,7 +58,7 @@ export const Todolist = () => {
     }, [todoLists, tasks]);
 
 
-    function handleChangeValueFilterTodo(value: FilterValuesType) {
+    function handleChangeValueFilterTodo(value?: FilterValuesType) {
         dispatch(changeTodolistFilter(value));
     }
 
@@ -100,28 +83,28 @@ export const Todolist = () => {
             <div className={style.header__block}>
                 <div className={style.text}>TODO LIST</div>
                 <div className={style.headerContent}>
-                    <DeleteTasksToggle toggleIsShackingToggle={setIsStartShakeElementsInputOrToggle}
-                                       setIsModalShowActiveAddTask={setModalActiveAddTask}
-                                       setIsErrorShowModal={setIsErrorModalActive}
+                    <DeleteTasksToggle isStartShakeInputOrDeletingTasksToggle={setIsStartShakeInputOrDeletingTasksToggle}
+                                       setIsShowModalAddTask={setModalActiveAddTask}
+                                       setIsErrorShowingModalForAddTodo={setIsErrorModalActive}
                                        titleValueInputForCondition={titleValueAddItemTaskOrTodo}/>
                     <ModalError isErrorModalActive={isErrorModalActive} setIsErrorModalActive={setIsErrorModalActive}>
                         <h1>Enter values to create a Todolist</h1>
                     </ModalError>
                     <TodosListHeaderControls
-                        addItemTodoOrTasks={handleAddTodolist}
-                        handleChangeValueFilterTodo={handleChangeValueFilterTodo}
+                        addTodoOrTodoList={handleAddTodolist}
+                        handleChangeFilterTaskStatus={handleChangeValueFilterTodo}
                         withFilterSelectTaskStatus
-                        ButtonSize={'large'}
+                        buttonSize={'large'}
                         withSwitchTheme
-                        isStartShakeElementsInputOrToggle={isStartShakeElementsInputOrToggle}
-                        setIsStartShakeElementsInputOrToggle={setIsStartShakeElementsInputOrToggle}
+                        isStartShakingInputOrToggle={isStartShakeElementsInputOrToggle}
+                        setIsStartShakingInputOrToggle={setIsStartShakeInputOrDeletingTasksToggle}
                         isModalVisibleAddTask={modalActiveAddTask}
                         setIsModalVisibleAddTask={setModalActiveAddTask}
-                        placeholderForInputElements={'Search note...'}
-                        ButtonVariations={'primary'}
+                        inputPlaceholder={'Search note...'}
                         titleValueAddItemTodoOrTasks={titleValueAddItemTaskOrTodo}
                         setTitleValueAddItemTodoOrTasks={setTitleValueAddItemTaskOrTodo}
-                        inputSize={"large"}
+                        inputSizeAddTodoOrTask={"large"}
+                        classNameForButton={style.addButton}
                     />
                 </div>
             </div>
@@ -135,7 +118,7 @@ export const Todolist = () => {
                 {todoLists.map(tl => (
                     <TodolistItems
                         todolistId={tl.id}
-                        titleValueTodo={tl.title}
+                        todoTitleValue={tl.title}
                         changeFilterTasksStatus={handleChangeValueFilterTodo}
                         filterTasksStatus={tl.filter}
                         removeTodolist={handleRemoveTodolist}

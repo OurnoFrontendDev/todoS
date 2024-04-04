@@ -1,0 +1,40 @@
+$primary-color: #6C63FF;
+
+.container {
+  display: block;
+  position: relative;
+  margin: 3px 0 0 23px;
+  padding-left: 26px;
+  right: 20px;
+
+  .checkbox {
+    appearance: none;
+    position: absolute;
+    top: 21px;
+    left: 0;
+    margin: 0;
+    width: 27px;
+    height: 26px;
+    border: 1px solid $primary-color;
+    border-radius: 3px;
+
+    &:checked {
+      background-color: $primary-color;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 6px;
+        left: 8px;
+        width: 7px;
+        height: 15.5px;
+        border: 2px solid transparent;
+        border-bottom-color: white;
+        border-right-color: white;
+        transform-origin: 50% 50%;
+        transform: rotate(35deg);
+      }
+    }
+  }
+}

@@ -26,11 +26,11 @@ export function usePortal(id: string) {
         if (!existingParent) {
             addRootElement(parentElem);
         }
-        if (rootElemRef.current) { // Проверяем, что rootElemRef.current не равен null перед вызовом методов
+        if (rootElemRef.current) {
             parentElem.appendChild(rootElemRef.current);
         }
         return function removeElement() {
-            if (rootElemRef.current) { // Проверяем, что rootElemRef.current не равен null перед вызовом методов
+            if (rootElemRef.current) {
                 rootElemRef.current.remove();
             }
             if (!parentElem.childElementCount) {

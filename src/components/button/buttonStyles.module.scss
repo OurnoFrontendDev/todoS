@@ -8,42 +8,36 @@
   width: 38px;
   height: 38px;
   border-radius: 5px;
-}
 
-.smallButton {
-  width: 30px;
-  height: 30px;
-}
+  &.smallButton {
+    width: 30px;
+    height: 30px;
+  }
 
-.largeButton {
-  width: 38px;
-  height: 38px;
-}
+  &.largeButton {
+    width: 38px;
+    height: 38px;
+  }
 
-.extraButton {
-  width: 110px;
-  color: white;
-}
+  &.extraButton {
+    width: 110px;
+    color: white;
+  }
 
-.primary {
-  position: fixed;
-  width: 49px;
-  height: 50px;
-  border-radius: 29px;
-  bottom: 347px;
-  right: 600px;
-}
+  &.primary {
+    background-color: #6C63FF;
+  }
 
-.secondary {
-  background-color: #6C63FF;
-  height: 30px;
-  width: 30px;
-  border-radius: 100%;
-  border: 1px solid #6C63FF;
-}
+  &.secondary {
+    background-color: #6C63FF;
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    border: 1px solid #6C63FF;
+  }
 
-.icons {
-  background-color: transparent;
-  border: none;
+  &.icons {
+    background-color: transparent;
+    border: none;
+  }
 }
-

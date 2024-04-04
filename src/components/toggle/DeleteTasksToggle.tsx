@@ -1,43 +1,44 @@
 import React, {useState} from 'react';
-import style from "./toglerStyles.module.scss"
+import style from "./deleteTasksToggleStyles.module.scss"
 import {useDispatch} from "react-redux";
-import {deleteAllTasks} from "../../state/tasks-reducer";
 import {useAppSelector} from "../../state/store";
 import classNames from "classnames";
+import {deleteAllTasks} from "../../state/actions";
 
 type DeleteTasksToggleProps = {
-    toggleIsShackingToggle: (isShake: boolean) => void
-    setIsModalShowActiveAddTask: (isModalShowActiveAddTask: boolean) => void
-    setIsErrorShowModal: (isErrorShowModal: boolean) => void
+    isStartShakeInputOrDeletingTasksToggle: (isShake: boolean) => void
+    setIsShowModalAddTask: (isShowModalAddTask: boolean) => void
+    setIsErrorShowingModalForAddTodo: (isErrorShowingModalForAddTodo: boolean) => void
     titleValueInputForCondition: string
 }
 export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
     const {
-        toggleIsShackingToggle,
-        setIsModalShowActiveAddTask,
-        setIsErrorShowModal,
+        isStartShakeInputOrDeletingTasksToggle,
+        setIsShowModalAddTask,
+        setIsErrorShowingModalForAddTodo,
         titleValueInputForCondition
     } = props
     const dispatch = useDispatch()
     const tasks = useAppSelector(state => state.tasks.todos)
     const deletedTotal = useAppSelector((state) => state.tasks.deletedTotal);
-    const isEmptyTasks = Object.keys(tasks).length === 0
 
     const [isChecked, setIsChecked] = useState(false);
     const [isShake, setIsShake] = useState(false)
     const handleDeleteTasks = () => {
+        const isEmptyTasks = Object.keys(tasks).length === 0
+       debugger
         if (isEmptyTasks) {
-           toggleIsShackingToggle(true);
-            setIsModalShowActiveAddTask(true);
+           isStartShakeInputOrDeletingTasksToggle(true);
+            setIsShowModalAddTask(true);
             setIsShake(true);
             setTimeout(() => {
                 setIsShake(false);
-                props.toggleIsShackingToggle(false);
+                isStartShakeInputOrDeletingTasksToggle(false);
             }, 500);
-        } else if (titleValueInputForCondition.trim() === "" && deletedTotal && deletedTotal > 0) {
+        } else if (titleValueInputForCondition.trim()==="" && deletedTotal && deletedTotal > 0) {
             setIsShake(true);
             setTimeout(() => {
-                setIsErrorShowModal(true);
+                setIsErrorShowingModalForAddTodo(true);
             }, 100);
         } else {
             setIsChecked(true);

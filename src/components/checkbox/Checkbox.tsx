@@ -10,7 +10,7 @@ type CheckboxProps = {
 export function Checkbox(props: CheckboxProps) {
     const {checked, children, onChange} = props
     return (
-        <label className={style.checkboxContainer}>
+        <label className={style.container}>
             <input
                 type="checkbox"
                 className={style.checkbox}

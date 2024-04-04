@@ -15,7 +15,7 @@ export const TodosCounter = () => {
         }
     }, [addTasksForAllTimes]);
     const containerClassName = classNames(
-        style.counterContainer,
+        style.container,
         {[style.visible]: isVisibleCounter}
     )
     return (

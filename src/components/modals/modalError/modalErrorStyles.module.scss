@@ -1,7 +1,7 @@
-.modalError {
-  height:100vh;
+.container {
+  height: 100vh;
   width: 100vw;
-  background-color: rgb(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
   left: 0;
@@ -9,26 +9,22 @@
   align-items: center;
   justify-content: center;
   transform: scale(0);
-}
 
-.modalError {
+  &__content {
+    padding: 20px;
+    border-radius: 12px;
+    height: 278px;
+    width: 512px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-light);
+    margin-right: 19px;
+    justify-content: center;
+    align-items: center;
+  }
+
   &.active {
     transform: scale(1);
     pointer-events: all;
   }
 }
-
-.modal__contentError {
-  padding: 20px;
-  border-radius: 12px;
-  height: 278px;
-  width: 512px;
-  display: flex;
-  margin-bottom: 358px;
-  flex-direction: column;
-  background-color: var(--bg-light);
-  margin-right: 19px;
-  justify-content: center;
-  align-items: center;
-}
-

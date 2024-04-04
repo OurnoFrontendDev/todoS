@@ -1,12 +1,4 @@
-import {v1} from 'uuid';
-import {TodolistType} from "../components/todolist/Todolist";
-import {FilterValuesType} from "../components/header/FilterSelectTaskStatusProps";
-import {
-    AddTodolistActionType,
-    ChangeTodolistFilterActionType,
-    ChangeTodolistTitleActionType,
-    RemoveTodolistActionType, typesForTodosActionCreator
-} from "../types/actionType/types";
+import {TodolistType, typesForTodosActionCreator} from "../types/actionType/types";
 
 const initialState: Array<TodolistType> = []
 export const todolistReducer = (state: TodolistType[] = initialState, action: typesForTodosActionCreator): Array<TodolistType> => {
@@ -35,23 +27,6 @@ export const todolistReducer = (state: TodolistType[] = initialState, action: ty
             return state;
     }
 }
-export const removeTodolist = (todolistId: string): RemoveTodolistActionType => {
-    return {type: 'REMOVE-TODOLIST', id: todolistId}
-}
-export const addTodolist = (title: string): AddTodolistActionType => {
-    return {type: 'ADD-TODOLIST', title: title, todolistId: v1()}
-}
-export const changeTodolistTitle = (id: string, title: string): ChangeTodolistTitleActionType => {
-    return {type: 'CHANGE-TODOLIST-TITLE', id: id, title: title}
-}
-export const changeTodolistFilter = (filter: FilterValuesType): ChangeTodolistFilterActionType => {
-    return {type: 'CHANGE-TODOLIST-FILTER', filter: filter}
-}
-export const initTodoList = (payload: TodolistType[]) => {
-    return {
-        type: "INIT_TODO_LIST",
-        payload: payload
-    };
-};
+
 
 
