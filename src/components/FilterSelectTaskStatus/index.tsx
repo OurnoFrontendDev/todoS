@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import style from './filterSelectTaskStatusStyles.module.scss'
+import style from './styles.module.scss'
 export type FilterValuesType = 'all' | 'active' | 'completed';
 type FilterSelectTaskStatus = {
     onChange?: (value?: FilterValuesType) => void;

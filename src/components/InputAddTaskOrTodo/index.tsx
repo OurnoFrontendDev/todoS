@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import style from "./inputStyles.module.scss"
+import style from "./styles.module.scss"
 import classNames from "classnames";
 
 export type InputSize = "extraLarge" | "large" | "small"
@@ -12,7 +12,7 @@ type InputProps = {
     inputSize: InputSize
 }
 
-export const InputDisplayForAddTaskOrTodo: React.FC<InputProps> = (props) => {
+export const InputAddTaskOrTodo: React.FC<InputProps> = (props) => {
     const {
         value,
         onChange,
@@ -26,18 +26,16 @@ export const InputDisplayForAddTaskOrTodo: React.FC<InputProps> = (props) => {
         large: style.container__large,
         small: style.container__small
     }
-    const classNamesInput = classNames(className, style.container, inputSizeToClassNameMap[inputSize])
+    const classNameInput = classNames(className, style.container, inputSizeToClassNameMap[inputSize])
     return (
-        <div>
-            <input
-                type="text"
-                value={value}
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                placeholder={placeholder}
-                className={classNamesInput}
-            />
-        </div>
+        <input
+            type="text"
+            value={value}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            placeholder={placeholder}
+            className={classNameInput}
+        />
     );
 };
 

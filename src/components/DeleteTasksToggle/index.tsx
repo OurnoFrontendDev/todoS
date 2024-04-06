@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import style from "./deleteTasksToggleStyles.module.scss"
+import style from "./styles.module.scss"
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../state/store";
 import classNames from "classnames";
@@ -8,15 +8,15 @@ import {deleteAllTasks} from "../../state/actions";
 type DeleteTasksToggleProps = {
     isStartShakeInputOrDeletingTasksToggle: (isShake: boolean) => void
     setIsShowModalAddTask: (isShowModalAddTask: boolean) => void
-    setIsErrorShowingModalForAddTodo: (isErrorShowingModalForAddTodo: boolean) => void
-    titleValueInputForCondition: string
+    setIsErrorShowingModalAddTodo: (isErrorShowingModalForAddTodo: boolean) => void
+    conditionInputValue: string
 }
 export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
     const {
         isStartShakeInputOrDeletingTasksToggle,
         setIsShowModalAddTask,
-        setIsErrorShowingModalForAddTodo,
-        titleValueInputForCondition
+        setIsErrorShowingModalAddTodo,
+        conditionInputValue
     } = props
     const dispatch = useDispatch()
     const tasks = useAppSelector(state => state.tasks.todos)
@@ -26,19 +26,18 @@ export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
     const [isShake, setIsShake] = useState(false)
     const handleDeleteTasks = () => {
         const isEmptyTasks = Object.keys(tasks).length === 0
-       debugger
         if (isEmptyTasks) {
-           isStartShakeInputOrDeletingTasksToggle(true);
+            isStartShakeInputOrDeletingTasksToggle(true);
             setIsShowModalAddTask(true);
             setIsShake(true);
             setTimeout(() => {
                 setIsShake(false);
                 isStartShakeInputOrDeletingTasksToggle(false);
             }, 500);
-        } else if (titleValueInputForCondition.trim()==="" && deletedTotal && deletedTotal > 0) {
+        } else if (conditionInputValue.trim() === "" && deletedTotal && deletedTotal > 0) {
             setIsShake(true);
             setTimeout(() => {
-                setIsErrorShowingModalForAddTodo(true);
+                setIsErrorShowingModalAddTodo(true);
             }, 100);
         } else {
             setIsChecked(true);
@@ -48,20 +47,21 @@ export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
             dispatch(deleteAllTasks());
         }
     }
-    const stylesForToggleInput = classNames(
+
+    const deleteTasksToggleClassNameInput = classNames(
         style.checkedToggle, style.inputToggle
     )
-    const stylesForToggleSpan = classNames(
+
+    const deleteTaskToggleClassName = classNames(
         style.button, {
             [style.shake]: isShake,
-
         }
     )
     return (
         <div className={style.container}>
             <label>
-                <input type="checkbox" className={stylesForToggleInput} checked={isChecked}/>
-                <span className={stylesForToggleSpan} onClick={handleDeleteTasks}></span>
+                <input type="checkbox" className={deleteTasksToggleClassNameInput} checked={isChecked}/>
+                <span className={deleteTaskToggleClassName} onClick={handleDeleteTasks}></span>
             </label>
         </div>
     );

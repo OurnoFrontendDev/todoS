@@ -21,6 +21,7 @@ export const todolistReducer = (state: TodolistType[] = initialState, action: ty
             return state.map(el => ({...el, filter: action.filter}))
         }
         case 'INIT-TODO-LIST': {
+            console.log("INIT-TODO-LIST",action.payload)
             return action.payload
         }
         default:

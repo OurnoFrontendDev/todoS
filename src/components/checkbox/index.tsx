@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import style from './checkboxStyles.module.scss';
+import style from './styles.module.scss';
 
 type CheckboxProps = {
     checked: boolean

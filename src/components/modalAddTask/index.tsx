@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useState,MouseEvent} from 'react';
-import style from "./modalAddTodoStyles.module.scss"
-import {Button} from "../../button/Button";
+import style from "./styles.module.scss"
+import {Button} from "../button";
 import {createPortal} from "react-dom";
-import {InputDisplayForAddTaskOrTodo} from "../../manipulationsWithTasks/InputDisplayForAddTaskOrTodo";
+import {InputAddTaskOrTodo} from "../InputAddTaskOrTodo";
 import classNames from "classnames";
-import {usePortal} from "../../../hooks/useCreatePortal";
+import {usePortal} from "../../hooks/useCreatePortal";
 
 type ModalAddTodoProps = {
     isActiveModalAddTodo?: boolean
@@ -36,22 +36,22 @@ export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
     }
 
     const handleIsActiveModalAddTodo = () => setIsActiveModalAddTodo?.(false)
-    const handleStopPropagationViewAddingTodoModal =(e:MouseEvent<HTMLDivElement>) => e.stopPropagation()
+    const handleStopPropagation =(e:MouseEvent<HTMLDivElement>) => e.stopPropagation()
 
-    const modalAddTodoStyleClass = classNames(style.container, {
+    const classNameModalAddTodo = classNames(style.container, {
         [style.active]: isActiveModalAddTodo
     });
     const portalAddModalTodo = usePortal("modalAddTodo");
     return createPortal(
-        <div className={modalAddTodoStyleClass} onClick={handleIsActiveModalAddTodo}>
-            <div className={style.container__content} onClick={handleStopPropagationViewAddingTodoModal}>
+        <div className={classNameModalAddTodo} onClick={handleIsActiveModalAddTodo}>
+            <div className={style.containerContent} onClick={handleStopPropagation}>
                 <div className={style.contEntInner}>
                     <div className={style.text__clue__container}>
                         <span className={style.text__clue}>{displayValueTitleTodo}</span>
                     </div>
-                    <InputDisplayForAddTaskOrTodo onChange={handleInputChange}
-                                                  value={titleValueTodo}
-                                                  placeholder={"Input your note..."} inputSize={"extraLarge"}/>
+                    <InputAddTaskOrTodo onChange={handleInputChange}
+                                        value={titleValueTodo}
+                                        placeholder={"Input your note..."} inputSize={"extraLarge"}/>
                 </div>
                 <div className={style.addingTodoAndCloseModalButtons}>
                     <Button onClick={handleIsActiveModalAddTodo} buttonSize={"extraLarge"}>

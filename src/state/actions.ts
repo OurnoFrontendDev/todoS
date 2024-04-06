@@ -4,7 +4,7 @@ import {
     RemoveTodolistActionType, TasksStateType, TodolistType
 } from "../types/actionType/types";
 import {v1} from "uuid";
-import {FilterValuesType} from "../components/header/FilterSelectTaskStatus";
+import {FilterValuesType} from "../components/FilterSelectTaskStatus";
 
 export const removeTask = (taskId: string, todolistId: string) => {
     return {type: 'REMOVE-TASK', taskId: taskId, todolistId: todolistId}
@@ -39,7 +39,7 @@ export const changeTodolistFilter = (filter?: FilterValuesType): ChangeTodolistF
 }
 export const initTodoList = (payload: TodolistType[]) => {
     return {
-        type: "INIT_TODO_LIST",
+        type: 'INIT-TODO-LIST',
         payload: payload
     };
 };

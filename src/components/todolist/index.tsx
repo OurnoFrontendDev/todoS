@@ -1,33 +1,34 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, useAppSelector} from '../../state/store';
-import {TodosCounter} from '../todosCounter/TodosCounter';
-import {TodolistItems} from '../../todolistItems/TodolistItems';
-import style from './todolistStyles.module.scss';
-import {DeleteTasksToggle} from '../toggle/DeleteTasksToggle';
+import {TodosCounter} from '../todosCounter';
+import {TodolistItems} from '../todolistItems';
+import style from './styles.module.scss';
+import {DeleteTasksToggle} from '../DeleteTasksToggle';
 import DetectiveLight from '../../img/DarkModelIcon.svg';
 import DetectiveDark from '../../img/DetectiveDark.svg';
 import {Icon} from '../svg/SvgLoader';
 import {useTheme} from '../../hooks/useTheme';
-import {ModalError} from "../modals/modalError/ModalError";
-import {TodosListHeaderControls} from "../header/TodosListHeaderControls";
+import {ModalError} from "../modalShowingError";
+import {TodosListHeaderControls} from "../todosListHeaderControls";
 import classNames from "classnames";
-import {FilterValuesType} from "../header/FilterSelectTaskStatus";
+import {FilterValuesType} from "../FilterSelectTaskStatus";
 import {TasksStateType,  TodolistType} from "../../types/actionType/types";
 import {
     addTodolist,
     changeTodolistFilter,
     changeTodolistTitle,
-    initTasks,
-    initTodoList,
+    initTasks, initTodoList,
+    // initTodoList,
     removeTodolist
 } from "../../state/actions";
 
 export const Todolist = () => {
     const dispatch = useDispatch();
     const todoLists = useSelector<RootState, TodolistType[]>(state => state.todolists);
+    console.log("todoLists",todoLists)
     const tasks = useAppSelector(state => state.tasks.todos)
-
+    console.log("tasks",tasks)
     const {isDark} = useTheme();
 
     const [modalActiveAddTask, setModalActiveAddTask] = useState<boolean | undefined>(false)
@@ -36,7 +37,6 @@ export const Todolist = () => {
     const [isStartShakeElementsInputOrToggle, setIsStartShakeInputOrDeletingTasksToggle] = useState(false);
 
     useEffect(() => {
-
         const savedTodoLists = localStorage.getItem("todoLists")
         const savedTasks = localStorage.getItem("tasks")
         if (savedTodoLists) {
@@ -52,11 +52,11 @@ export const Todolist = () => {
             }
         }
     }, []);
+
     useEffect(() => {
         todoLists.length && localStorage.setItem("todoLists", JSON.stringify(todoLists))
         todoLists.length && localStorage.setItem("tasks", JSON.stringify(tasks))
     }, [todoLists, tasks]);
-
 
     function handleChangeValueFilterTodo(value?: FilterValuesType) {
         dispatch(changeTodolistFilter(value));
@@ -74,19 +74,19 @@ export const Todolist = () => {
         dispatch(addTodolist(title));
     }
 
-    const containerTodo = classNames(style.container, {
+    const classNameContainerTodo = classNames(style.container, {
         [style.containerDark]: isDark,
     })
     return (
-        <div className={containerTodo}>
+        <div className={classNameContainerTodo}>
             <TodosCounter/>
-            <div className={style.header__block}>
+            <div className={style.header}>
                 <div className={style.text}>TODO LIST</div>
                 <div className={style.headerContent}>
                     <DeleteTasksToggle isStartShakeInputOrDeletingTasksToggle={setIsStartShakeInputOrDeletingTasksToggle}
                                        setIsShowModalAddTask={setModalActiveAddTask}
-                                       setIsErrorShowingModalForAddTodo={setIsErrorModalActive}
-                                       titleValueInputForCondition={titleValueAddItemTaskOrTodo}/>
+                                       setIsErrorShowingModalAddTodo={setIsErrorModalActive}
+                                       conditionInputValue={titleValueAddItemTaskOrTodo}/>
                     <ModalError isErrorModalActive={isErrorModalActive} setIsErrorModalActive={setIsErrorModalActive}>
                         <h1>Enter values to create a Todolist</h1>
                     </ModalError>
@@ -104,7 +104,7 @@ export const Todolist = () => {
                         titleValueAddItemTodoOrTasks={titleValueAddItemTaskOrTodo}
                         setTitleValueAddItemTodoOrTasks={setTitleValueAddItemTaskOrTodo}
                         inputSizeAddTodoOrTask={"large"}
-                        classNameForButton={style.addButton}
+                        buttonClassName={style.addButton}
                     />
                 </div>
             </div>

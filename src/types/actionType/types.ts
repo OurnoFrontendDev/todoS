@@ -1,4 +1,4 @@
-import {FilterValuesType} from "../../components/header/FilterSelectTaskStatus";
+import {FilterValuesType} from "../../components/FilterSelectTaskStatus";
 import {
     ADD_TASKS,
     ADD_TODOLIST, CHANGE_TASK_STATUS, CHANGE_TASK_TITLE,

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-left: 31px;
+  padding-bottom: 20px;
+}
+
+.tasksContainer:not(:last-child) {
+  border-bottom: 1px solid #6C63FF;
+  padding-bottom: 3px;
+}
+
+.completedTask {
+  text-decoration: line-through;
+}
+
+.editTask {
+  display: flex;
+  padding: 20px;
+  flex-grow: 1;
+}

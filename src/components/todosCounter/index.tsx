@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import style from "./todosCounterStyles.module.scss";
+import style from "./styles.module.scss";
 import {useAppSelector} from "../../state/store";
 import classNames from "classnames";
 
 export const TodosCounter = () => {
     const addedNowTasks = useAppSelector((state) => state.tasks.addedNow);
+    console.log("addedNowTasks",addedNowTasks)
     const deletedTotalTasks = useAppSelector((state) => state.tasks.deletedTotal);
-    const addTasksForAllTimes = Number(localStorage.getItem("addedTotal") || "0")
+    const addTasksAllTimes = Number(localStorage.getItem("addedTotal") || "0")
 
     const [isVisibleCounter, setIsVisibleCounter] = useState(false);
     useEffect(() => {
-        if (addTasksForAllTimes > 0) {
+        if (addTasksAllTimes > 0) {
             setIsVisibleCounter(true);
         }
-    }, [addTasksForAllTimes]);
+    }, [addTasksAllTimes]);
     const containerClassName = classNames(
         style.container,
         {[style.visible]: isVisibleCounter}
@@ -25,7 +26,7 @@ export const TodosCounter = () => {
                     className={style.value}>{addedNowTasks}</span>
                 </div>
                 <div className={style.counterItem}>Добавленные задачи за все время: <span
-                    className={style.value}>{addTasksForAllTimes}</span></div>
+                    className={style.value}>{addTasksAllTimes}</span></div>
                 <div className={style.counterItem}>Удалено задач за все время: <span
                     className={style.value}>{deletedTotalTasks}</span></div>
             </div>

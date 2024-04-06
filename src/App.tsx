@@ -1,11 +1,16 @@
 import React from 'react';
-import "/src/App.scss"
-import {Todolist} from "./components/todolist/Todolist";
+import "/src/styles/App.scss"
+import {Todolist} from "./components/todolist";
 import {useTheme} from "./hooks/useTheme";
+import classNames from "classnames";
 
 function App() {
     const {isDark} = useTheme()
-    const appClassName = `App ${isDark ? 'AppDark' : 'AppLight'}`;
+
+    const appClassName = classNames("App", {
+        AppDark: isDark,
+        AppLight: !isDark,
+    });
     return (
         <div className={appClassName}><Todolist/></div>
     )

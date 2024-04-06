@@ -85,7 +85,7 @@ export default (env: Environment, argv: { mode: string }): Configuration => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: 'src/public/index.html'
+                template: './public/index.html'
             }),
             new MiniCssExtractPlugin(),
             new CleanWebpackPlugin(), // Переместите сюда
@@ -95,6 +95,9 @@ export default (env: Environment, argv: { mode: string }): Configuration => {
     // Добавляем конфигурацию сервера разработки, если мы находимся в режиме разработки
     if (isDevelopment) {
         const devServerConfig: DevServerConfiguration = {
+            static: {
+                directory: path.join(__dirname, "public")
+            }, // Указываем путь к статическим файлам
             compress: true,
             port: 3000,
             open: true,

@@ -1,19 +1,19 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import style from "./todosListHeaderControlsStyle.module.scss"
+import style from "./style.module.scss"
 import {useTheme} from "../../hooks/useTheme";
-import {ModalAddTodo} from "../modals/modalAddTask/ModalAddTodo";
-import {InputDisplayForAddTaskOrTodo, InputSize} from "../manipulationsWithTasks/InputDisplayForAddTaskOrTodo";
+import {ModalAddTodo} from "../modalAddTask";
+import {InputAddTaskOrTodo, InputSize} from "../InputAddTaskOrTodo";
 import {Icon} from "../svg/SvgLoader";
 import SwitchToDarkIcon from "/src/img/LightModeIcon.svg"
 import SwitchToLightIcon from "/src/img/DarkModeIcon.svg"
 import AddTodoOrTaskIcon from "/src/img/AddTodoOrTaskIcon.svg"
-import {FilterSelectTaskStatus, FilterValuesType} from "./FilterSelectTaskStatus";
-import {Button, ButtonSize, ButtonVariant} from "../button/Button";
+import {FilterSelectTaskStatus, FilterValuesType} from "../FilterSelectTaskStatus";
+import {Button, ButtonSize, ButtonVariant} from "../button";
 import classNames from "classnames";
 
 type ToggleStartingShakingInputOrToggle = (isStartShakeElementsInputOrToggle: boolean) => void;
 
-type TodosListHeaderControls = {
+type TodosListHeaderControlsProps = {
     addTodoOrTodoList: (title: string) => void;
     withFilterSelectTaskStatus?: boolean;
     handleChangeFilterTaskStatus?: (value?: FilterValuesType) => void;
@@ -30,9 +30,9 @@ type TodosListHeaderControls = {
     setTitleValueAddItemTodoOrTasks: (titleValueAddItemTodoOrTasks: string) => void
     inputSizeAddTodoOrTask: InputSize
     buttonVariant?:ButtonVariant
-    classNameForButton?:string
+    buttonClassName?:string
 }
-export const TodosListHeaderControls: React.FC<TodosListHeaderControls> = (props) => {
+export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (props) => {
     const {
         addTodoOrTodoList,
         withFilterSelectTaskStatus,
@@ -48,7 +48,7 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControls> = (props
         titleValueAddItemTodoOrTasks,
         inputSizeAddTodoOrTask,
         buttonVariant,
-        classNameForButton
+        buttonClassName
     } = props;
 
     const {isDark, setIsDark} = useTheme()
@@ -87,14 +87,13 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControls> = (props
     );
 
     const switchTheme = () => setIsDark ? setIsDark(!isDark) : null
-    console.log("sdfsdf",buttonVariant)
     return (
         <div className={inputClassName}>
-            <InputDisplayForAddTaskOrTodo value={titleValueAddItemTodoOrTasks}
-                                          onChange={onChangeInputValueAddTodoOrTask}
-                                          onKeyDown={onKeyPressInputAddTodoOrTask}
-                                          placeholder={inputPlaceholder}
-                                          inputSize={inputSizeAddTodoOrTask}
+            <InputAddTaskOrTodo value={titleValueAddItemTodoOrTasks}
+                                onChange={onChangeInputValueAddTodoOrTask}
+                                onKeyDown={onKeyPressInputAddTodoOrTask}
+                                placeholder={inputPlaceholder}
+                                inputSize={inputSizeAddTodoOrTask}
             />
             {
                 withFilterSelectTaskStatus && (<FilterSelectTaskStatus onChange={handleChangeFilterTaskStatus}/>)
@@ -102,7 +101,7 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControls> = (props
             <ModalAddTodo isActiveModalAddTodo={!!isModalVisibleAddTask}
                           setIsActiveModalAddTodo={setIsModalVisibleAddTask}
                           cancelText={"Apply"} okText={"Cancel"} handleAddTodo={addTodoOrTodoList}/>
-            <Button onClick={handleAddTodoOrTask} buttonSize={buttonSize} className={classNameForButton} buttonVariant={buttonVariant}>
+            <Button onClick={handleAddTodoOrTask} buttonSize={buttonSize} className={buttonClassName} buttonVariant={buttonVariant}>
                 <Icon Svg={AddTodoOrTaskIcon} width={20} height={20}/>
             </Button>
             {withSwitchTheme && (

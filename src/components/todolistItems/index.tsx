@@ -1,17 +1,16 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {useAppSelector} from '../state/store';
-import {Icon} from '../components/svg/SvgLoader';
+import {useAppSelector} from '../../state/store';
+import {Icon} from '../svg/SvgLoader';
 import DeletingTodoOrTaskIcon from '/src/img/DeletingTodoOrTaskIcon.svg';
-import style from '/src/todolistItems/todolistItem.module.scss';
-import {InputTaskOrTodoListEditing} from "../components/manipulationsWithTasks/InputTaskOrTodoListEditing";
-import {Button} from "../components/button/Button";
-import {TodosListHeaderControls} from "../components/header/TodosListHeaderControls";
-import {Checkbox} from "../components/checkbox/Checkbox";
-import {FilterValuesType} from "../components/header/FilterSelectTaskStatus";
+import style from '/src/components/todolistItems/styles.module.scss';
+import {InputTaskOrTodoListEditing} from "../InputTaskOrTodoListEditing";
+import {Button} from "../button";
+import {TodosListHeaderControls} from "../todosListHeaderControls";
+import {FilterValuesType} from "../FilterSelectTaskStatus";
 import classNames from "classnames";
-import {addTask, changeTaskStatus, changeTaskTitle, removeTask} from "../state/actions";
-
+import {addTask, changeTaskStatus, changeTaskTitle, removeTask} from "../../state/actions";
+import {Task} from "../task";
 
 type TodolistItems = {
     todolistId: string;
@@ -33,7 +32,8 @@ export function TodolistItems(props: TodolistItems) {
 
     const dispatch = useDispatch();
     const tasks = useAppSelector(state => state.tasks.todos[todolistId]);
-
+    console.log(tasks)
+    console.log(todolistId)
     const [titleTasks, setTitleTasks] = useState("")
 
     const handleAddTask = (titleTasks: string) => {
@@ -70,9 +70,8 @@ export function TodolistItems(props: TodolistItems) {
         }
         return filteredTasks;
     }, [tasks, filterTasksStatus]);
-
     return (
-        <div className={style.todoItemContainer}>
+        <div className={style.container}>
             <div className={style.todoItemHeader}>
                 <div className={style.todolistsItemsIcons}>
                     <InputTaskOrTodoListEditing valueTitleTodoOrTask={todoTitleValue}
@@ -91,29 +90,19 @@ export function TodolistItems(props: TodolistItems) {
             </div>
             <div className={style.todolistsItems}>
                 {filterTasksForTodolist.map(task => {
-                    const taskStyles = classNames(
+                    const taskClassName = classNames(
                         style.tasksContainer,
                         {
                             [style.completedTask]: task.isDone
                         }
                     );
                     return (
-                        (
-                            <div key={task.id} className={taskStyles}>
-                                <div className={style.todolistsItemsIcons}>
-                                    <Checkbox checked={task.isDone}
-                                              onChange={handleSwitchingTaskStatus(task.id)}/>
-                                    <div className={style.editTask}>
-                                        <InputTaskOrTodoListEditing valueTitleTodoOrTask={task.title}
-                                                                    handleOnChangeTitleTodoOrTasks={handleChangeTaskTitle(task.id)}/>
-                                        <Button onClick={handleRemoveTask(task.id)} buttonSize={'small'}
-                                                buttonVariant={'icons'}>
-                                            <Icon Svg={DeletingTodoOrTaskIcon} width={18} height={18}/>
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>
-                        )
+                        <div key={task.id} className={taskClassName}>
+                            <Task checked={task.isDone} handleTaskCheckboxOnChange={handleSwitchingTaskStatus(task.id)}
+                                  valueTitleTodoOrTask={task.title}
+                                  handleChangeTaskTitle={handleChangeTaskTitle(task.id)}
+                                  handleRemoveTask={handleRemoveTask(task.id)}/>
+                        </div>
                     )
                 })}
             </div>

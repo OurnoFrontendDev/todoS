@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './buttonStyles.module.scss';
+import style from './styles.module.scss';
 import classNames from "classnames";
 
 export type ButtonVariant = "primary" | "secondary" | "icons"
@@ -25,6 +25,6 @@ export const Button: React.FC<ButtonProps> = (props) => {
         secondary: style.secondary,
         icons: style.icons,
     }
-    const classNamesButton = classNames(className, style.button, buttonSizeToClassNameMap[buttonSize],buttonVariationsToClassNameMap[buttonVariant ||"primary"])
-    return (<button onClick={onClick} className={classNamesButton}>{children}</button>);
+    const classNameButton = classNames(className, style.button, buttonSizeToClassNameMap[buttonSize], buttonVariationsToClassNameMap[buttonVariant || "primary"])
+    return (<button onClick={onClick} className={classNameButton}>{children}</button>);
 };
