@@ -1,12 +1,11 @@
 .container {
   width: 1000px;
   height: 710px;
-  font-size: 26px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-family: 'Kanit', sans-serif;
   margin-top: 44px;
 }
 
@@ -14,17 +13,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 20px;
 
   .text {
     font-weight: bold;
-    font-size: 26px;
+    font-size: 30px;
     width: 120px;
     height: 34px;
-    margin-bottom: 19px;
+    margin-bottom: 30px;
     margin-left: 71px;
-    font-family: "Kanit", sans-serif;
     margin-top: 32px;
-    line-height: 1.25;
   }
 }
 

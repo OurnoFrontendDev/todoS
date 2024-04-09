@@ -11,26 +11,24 @@ import {FilterSelectTaskStatus, FilterValuesType} from "../FilterSelectTaskStatu
 import {Button, ButtonSize, ButtonVariant} from "../button";
 import classNames from "classnames";
 
-type ToggleStartingShakingInputOrToggle = (isStartShakeElementsInputOrToggle: boolean) => void;
-
 type TodosListHeaderControlsProps = {
     addTodoOrTodoList: (title: string) => void;
     withFilterSelectTaskStatus?: boolean;
     handleChangeFilterTaskStatus?: (value?: FilterValuesType) => void;
     withSwitchTheme?: boolean;
-    setIsStartShakingInputOrToggle?: ToggleStartingShakingInputOrToggle;
+    setIsStartShakingInputOrToggle?: (isStartShakeElementsInputOrToggle: boolean) => void;
     isStartShakingInputOrToggle?: boolean;
     className?: string;
-    inputPlaceholder: string;
+    placeholderAddingTaskOrTodo: string;
     isModalVisibleAddTask?: boolean;
     setIsModalVisibleAddTask?: (isModalVisibleAddTask?: boolean) => void;
     withErrorModal?: boolean
     buttonSize: ButtonSize
-    titleValueAddItemTodoOrTasks: string
-    setTitleValueAddItemTodoOrTasks: (titleValueAddItemTodoOrTasks: string) => void
-    inputSizeAddTodoOrTask: InputSize
-    buttonVariant?:ButtonVariant
-    buttonClassName?:string
+    titleAddItemTodoOrTasks: string
+    setTitleAddItemTodoOrTasks: (titleAddItemTodoOrTasks: string) => void
+    inputAddingTaskOrTodo: InputSize
+    buttonVariant?: ButtonVariant
+    buttonClassNameAddingTaskOrTodo?: string
 }
 export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (props) => {
     const {
@@ -40,23 +38,23 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
         withSwitchTheme,
         setIsStartShakingInputOrToggle,
         isStartShakingInputOrToggle,
-        inputPlaceholder,
+        placeholderAddingTaskOrTodo,
         isModalVisibleAddTask,
         setIsModalVisibleAddTask,
         buttonSize,
-        setTitleValueAddItemTodoOrTasks,
-        titleValueAddItemTodoOrTasks,
-        inputSizeAddTodoOrTask,
+        setTitleAddItemTodoOrTasks,
+        titleAddItemTodoOrTasks,
+        inputAddingTaskOrTodo,
         buttonVariant,
-        buttonClassName
+        buttonClassNameAddingTaskOrTodo
     } = props;
 
     const {isDark, setIsDark} = useTheme()
 
     const handleAddTodoOrTask = () => {
-        if (titleValueAddItemTodoOrTasks.trim() !== "") {
-            addTodoOrTodoList(titleValueAddItemTodoOrTasks);
-            setTitleValueAddItemTodoOrTasks("");
+        if (titleAddItemTodoOrTasks.trim() !== "") {
+            addTodoOrTodoList(titleAddItemTodoOrTasks);
+            setTitleAddItemTodoOrTasks("");
         } else {
             handleStartShaking();
             setIsModalVisibleAddTask?.(true)
@@ -69,7 +67,7 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
         }, 500);
     };
     const onChangeInputValueAddTodoOrTask = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitleValueAddItemTodoOrTasks(e.currentTarget.value)
+        setTitleAddItemTodoOrTasks(e.currentTarget.value)
     }
     const onKeyPressInputAddTodoOrTask = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -82,18 +80,18 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
     const inputClassName = classNames(
         style.container,
         {[style.shake]: isStartShakingInputOrToggle},
-        {[style.switchThemeDark ]: isDark},
+        {[style.switchThemeDark]: isDark},
         {[style.switchThemeLight]: !isDark}
     );
 
-    const switchTheme = () => setIsDark ? setIsDark(!isDark) : null
+    const handleSwitchTheme = () => setIsDark ? setIsDark(!isDark) : null
     return (
         <div className={inputClassName}>
-            <InputAddTaskOrTodo value={titleValueAddItemTodoOrTasks}
+            <InputAddTaskOrTodo value={titleAddItemTodoOrTasks}
                                 onChange={onChangeInputValueAddTodoOrTask}
                                 onKeyDown={onKeyPressInputAddTodoOrTask}
-                                placeholder={inputPlaceholder}
-                                inputSize={inputSizeAddTodoOrTask}
+                                placeholder={placeholderAddingTaskOrTodo}
+                                inputSize={inputAddingTaskOrTodo}
             />
             {
                 withFilterSelectTaskStatus && (<FilterSelectTaskStatus onChange={handleChangeFilterTaskStatus}/>)
@@ -101,11 +99,11 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
             <ModalAddTodo isActiveModalAddTodo={!!isModalVisibleAddTask}
                           setIsActiveModalAddTodo={setIsModalVisibleAddTask}
                           cancelText={"Apply"} okText={"Cancel"} handleAddTodo={addTodoOrTodoList}/>
-            <Button onClick={handleAddTodoOrTask} buttonSize={buttonSize} className={buttonClassName} buttonVariant={buttonVariant}>
+            <Button onClick={handleAddTodoOrTask} size={buttonSize} className={buttonClassNameAddingTaskOrTodo} variant={buttonVariant}>
                 <Icon Svg={AddTodoOrTaskIcon} width={20} height={20}/>
             </Button>
             {withSwitchTheme && (
-                <Button onClick={switchTheme} buttonSize={"large"}>
+                <Button onClick={handleSwitchTheme} size={"large"}>
                     <Icon Svg={iconSwitchTheme} width={20} height={20}/>
                 </Button>)}
         </div>

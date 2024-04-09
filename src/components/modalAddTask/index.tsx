@@ -44,8 +44,8 @@ export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
     const portalAddModalTodo = usePortal("modalAddTodo");
     return createPortal(
         <div className={classNameModalAddTodo} onClick={handleIsActiveModalAddTodo}>
-            <div className={style.containerContent} onClick={handleStopPropagation}>
-                <div className={style.contEntInner}>
+            <div className={style.container_content} onClick={handleStopPropagation}>
+                <div className={style.contentInner}>
                     <div className={style.text__clue__container}>
                         <span className={style.text__clue}>{displayValueTitleTodo}</span>
                     </div>
@@ -53,11 +53,11 @@ export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
                                         value={titleValueTodo}
                                         placeholder={"Input your note..."} inputSize={"extraLarge"}/>
                 </div>
-                <div className={style.addingTodoAndCloseModalButtons}>
-                    <Button onClick={handleIsActiveModalAddTodo} buttonSize={"extraLarge"}>
+                <div className={style.modalFooter}>
+                    <Button onClick={handleIsActiveModalAddTodo} size={"extraLarge"}>
                         {okText}
                     </Button>
-                    <Button onClick={onAddTodo } buttonSize={"extraLarge"}>
+                    <Button onClick={onAddTodo } size={"extraLarge"}>
                         {cancelText}
                     </Button>
                 </div>

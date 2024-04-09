@@ -12,7 +12,7 @@
   transform: scale(0);
   pointer-events: none;
 
-  &-content {
+  &_content {
     padding: 20px;
     border-radius: 12px;
     height: 278px;
@@ -23,12 +23,12 @@
     background-color: var(--bg-light);
     margin-right: 19px;
 
-    & .addingTodoAndCloseModalButtons {
+    & .modalFooter {
       display: flex;
       justify-content: space-between;
     }
 
-    & .contEntInner {
+    & .contentInner {
       flex-grow: 1;
     }
 
@@ -39,7 +39,6 @@
 
       & .text__clue {
         color: black;
-        font-family: 'Kanit', sans-serif;
         font-size: 26px;
       }
     }

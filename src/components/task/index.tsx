@@ -5,23 +5,22 @@ import {InputTaskOrTodoListEditing} from "../InputTaskOrTodoListEditing";
 import {Button} from "../button";
 import {Icon} from "../svg/SvgLoader";
 import DeletingTodoOrTaskIcon from "../../img/DeletingTodoOrTaskIcon.svg";
+import {TaskType} from "../../types/actionType/types";
 
 type TaskProps = {
-    checked: boolean
     handleTaskCheckboxOnChange: (e: ChangeEvent<HTMLInputElement>) => void
     handleChangeTaskTitle: (newValue: string) => void
-    valueTitleTodoOrTask: string
     handleRemoveTask: () => void
-}
+}&TaskType
 export const Task: FC<TaskProps> = (props) => {
-    const {checked, handleTaskCheckboxOnChange, valueTitleTodoOrTask, handleChangeTaskTitle, handleRemoveTask} = props
+    const {handleTaskCheckboxOnChange, handleChangeTaskTitle, handleRemoveTask , isDone,title} = props
     return (
-        <div className={style.todolistsItemsIcons}>
-            <Checkbox checked={checked} onChange={handleTaskCheckboxOnChange}/>
+        <div >
+            <Checkbox checked={isDone} onChange={handleTaskCheckboxOnChange}/>
             <div className={style.editTask}>
-                <InputTaskOrTodoListEditing valueTitleTodoOrTask={valueTitleTodoOrTask}
+                <InputTaskOrTodoListEditing valueTitleTodoOrTask={title}
                                             handleOnChangeTitleTodoOrTasks={handleChangeTaskTitle}/>
-                <Button onClick={handleRemoveTask} buttonSize={'small'} buttonVariant={'icons'}>
+                <Button onClick={handleRemoveTask} size={'small'} variant={'icons'}>
                     <Icon Svg={DeletingTodoOrTaskIcon} width={18} height={18}/>
                 </Button>
             </div>

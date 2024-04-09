@@ -19,16 +19,13 @@ import {
     changeTodolistFilter,
     changeTodolistTitle,
     initTasks, initTodoList,
-    // initTodoList,
     removeTodolist
 } from "../../state/actions";
 
 export const Todolist = () => {
     const dispatch = useDispatch();
     const todoLists = useSelector<RootState, TodolistType[]>(state => state.todolists);
-    console.log("todoLists",todoLists)
     const tasks = useAppSelector(state => state.tasks.todos)
-    console.log("tasks",tasks)
     const {isDark} = useTheme();
 
     const [modalActiveAddTask, setModalActiveAddTask] = useState<boolean | undefined>(false)
@@ -86,9 +83,9 @@ export const Todolist = () => {
                     <DeleteTasksToggle isStartShakeInputOrDeletingTasksToggle={setIsStartShakeInputOrDeletingTasksToggle}
                                        setIsShowModalAddTask={setModalActiveAddTask}
                                        setIsErrorShowingModalAddTodo={setIsErrorModalActive}
-                                       conditionInputValue={titleValueAddItemTaskOrTodo}/>
+                                       inputTitleAddTaskOrTodo={titleValueAddItemTaskOrTodo}/>
                     <ModalError isErrorModalActive={isErrorModalActive} setIsErrorModalActive={setIsErrorModalActive}>
-                        <h1>Enter values to create a Todolist</h1>
+                        <h2>Enter values to create a Todolist</h2>
                     </ModalError>
                     <TodosListHeaderControls
                         addTodoOrTodoList={handleAddTodolist}
@@ -100,11 +97,11 @@ export const Todolist = () => {
                         setIsStartShakingInputOrToggle={setIsStartShakeInputOrDeletingTasksToggle}
                         isModalVisibleAddTask={modalActiveAddTask}
                         setIsModalVisibleAddTask={setModalActiveAddTask}
-                        inputPlaceholder={'Search note...'}
-                        titleValueAddItemTodoOrTasks={titleValueAddItemTaskOrTodo}
-                        setTitleValueAddItemTodoOrTasks={setTitleValueAddItemTaskOrTodo}
-                        inputSizeAddTodoOrTask={"large"}
-                        buttonClassName={style.addButton}
+                        placeholderAddingTaskOrTodo={'Search note...'}
+                        titleAddItemTodoOrTasks={titleValueAddItemTaskOrTodo}
+                        setTitleAddItemTodoOrTasks={setTitleValueAddItemTaskOrTodo}
+                        inputAddingTaskOrTodo={"large"}
+                        buttonClassNameAddingTaskOrTodo={style.addButton}
                     />
                 </div>
             </div>
@@ -115,12 +112,12 @@ export const Todolist = () => {
                 </div>
             )}
             <div className={style.todoContainer}>
-                {todoLists.map(tl => (
+                {todoLists.map(todoList => (
                     <TodolistItems
-                        todolistId={tl.id}
-                        todoTitleValue={tl.title}
+                        todolistId={todoList.id}
+                        todoTitleValue={todoList.title}
                         changeFilterTasksStatus={handleChangeValueFilterTodo}
-                        filterTasksStatus={tl.filter}
+                        filterTasksStatus={todoList.filter}
                         removeTodolist={handleRemoveTodolist}
                         changeTodolistTitle={handleChangeTodolistTitle}
                     />

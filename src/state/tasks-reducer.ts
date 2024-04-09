@@ -4,20 +4,23 @@ import {TasksStateType, TaskType, typesForTasksActionCreator} from "../types/act
 export const initialState: TasksStateType = {
     todos: {},
     addedNow: 0,
-    addedTotal: 0,
-    deletedTotal: 0
+    addedTotal: Number(localStorage.getItem("addedTotalTasks")),
+    deletedTotal: Number(localStorage.getItem("deletedTotalTasks"))
 };
 
 export const tasksReducer = (state: TasksStateType = initialState, action: typesForTasksActionCreator): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             const updatedTodos = state.todos[action.todolistId].filter(el => el.id !== action.taskId);
+            const updatedDeleteTotal = state.deletedTotal ? state.deletedTotal + 1 : 1;
+            localStorage.setItem('deletedTotalTasks', JSON.stringify(updatedDeleteTotal));
             return {
                 ...state,
                 todos: {
                     ...state.todos,
                     [action.todolistId]: updatedTodos,
                 },
+
                 deletedTotal: state.deletedTotal ? state.deletedTotal + 1 : 1,
                 addedNow: state.addedNow ? state.addedNow - 1 : 0
             };
@@ -25,7 +28,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: types
         case 'ADD-TASKS': {
             const newTask: TaskType = {id: v1(), title: action.title, isDone: false}
             const updatedAddedTotal = state.addedTotal ? state.addedTotal + 1 : 1;
-            localStorage.setItem('addedTotal', JSON.stringify(updatedAddedTotal));
+            localStorage.setItem('addedTotalTasks', JSON.stringify(updatedAddedTotal));
             return {
                 ...state,
                 todos: {...state.todos, [action.todolistId]: [...state.todos[action.todolistId], newTask]},
@@ -85,7 +88,12 @@ export const tasksReducer = (state: TasksStateType = initialState, action: types
             };
         }
         case "INIT-TASKS": {
-            return {todos: action.payload}
+            return {
+                todos: action.payload,
+                addedTotal: state.addedTotal,
+                addedNow: state.addedNow,
+                deletedTotal: state.deletedTotal,
+            }
         }
         default:
             return state;

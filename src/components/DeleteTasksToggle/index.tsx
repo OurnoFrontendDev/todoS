@@ -9,14 +9,14 @@ type DeleteTasksToggleProps = {
     isStartShakeInputOrDeletingTasksToggle: (isShake: boolean) => void
     setIsShowModalAddTask: (isShowModalAddTask: boolean) => void
     setIsErrorShowingModalAddTodo: (isErrorShowingModalForAddTodo: boolean) => void
-    conditionInputValue: string
+    inputTitleAddTaskOrTodo: string
 }
 export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
     const {
         isStartShakeInputOrDeletingTasksToggle,
         setIsShowModalAddTask,
         setIsErrorShowingModalAddTodo,
-        conditionInputValue
+        inputTitleAddTaskOrTodo
     } = props
     const dispatch = useDispatch()
     const tasks = useAppSelector(state => state.tasks.todos)
@@ -34,7 +34,7 @@ export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
                 setIsShake(false);
                 isStartShakeInputOrDeletingTasksToggle(false);
             }, 500);
-        } else if (conditionInputValue.trim() === "" && deletedTotal && deletedTotal > 0) {
+        } else if (inputTitleAddTaskOrTodo.trim() === "" && deletedTotal && deletedTotal > 0) {
             setIsShake(true);
             setTimeout(() => {
                 setIsErrorShowingModalAddTodo(true);

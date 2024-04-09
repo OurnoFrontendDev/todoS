@@ -5,16 +5,16 @@ import classNames from "classnames";
 
 export const TodosCounter = () => {
     const addedNowTasks = useAppSelector((state) => state.tasks.addedNow);
-    console.log("addedNowTasks",addedNowTasks)
     const deletedTotalTasks = useAppSelector((state) => state.tasks.deletedTotal);
-    const addTasksAllTimes = Number(localStorage.getItem("addedTotal") || "0")
+    const addTasksAllTimes = useAppSelector((state) => state.tasks.addedTotal)
 
     const [isVisibleCounter, setIsVisibleCounter] = useState(false);
     useEffect(() => {
-        if (addTasksAllTimes > 0) {
+        if (addTasksAllTimes && addTasksAllTimes > 0) {
             setIsVisibleCounter(true);
         }
     }, [addTasksAllTimes]);
+
     const containerClassName = classNames(
         style.container,
         {[style.visible]: isVisibleCounter}

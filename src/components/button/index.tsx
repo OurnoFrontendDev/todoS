@@ -9,13 +9,13 @@ type ButtonProps = {
     children?: React.ReactNode
     onClick: () => void
     className?: string
-    buttonSize: ButtonSize
-    buttonVariant?: ButtonVariant
+    size: ButtonSize
+    variant?: ButtonVariant
 }
 export const Button: React.FC<ButtonProps> = (props) => {
-    const {children, onClick, className, buttonSize, buttonVariant} = props
+    const {children, onClick, className, size, variant} = props
 
-    const buttonSizeToClassNameMap: Record<ButtonProps["buttonSize"], string> = {
+    const buttonSizeToClassNameMap: Record<ButtonProps["size"], string> = {
         extraLarge: style.extraButton,
         large: style.largeButton,
         small: style.smallButton
@@ -25,6 +25,6 @@ export const Button: React.FC<ButtonProps> = (props) => {
         secondary: style.secondary,
         icons: style.icons,
     }
-    const classNameButton = classNames(className, style.button, buttonSizeToClassNameMap[buttonSize], buttonVariationsToClassNameMap[buttonVariant || "primary"])
-    return (<button onClick={onClick} className={classNameButton}>{children}</button>);
+    const classNameButton = classNames(className, style.button, buttonSizeToClassNameMap[size], buttonVariationsToClassNameMap[variant || "primary"])
+    return <button onClick={onClick} className={classNameButton}>{children}</button>
 };

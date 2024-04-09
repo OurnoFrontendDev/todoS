@@ -1,7 +1,7 @@
 import  {useRef, useEffect} from 'react';
 
 function createRootElement(id: string) {
-    const rootContainer = document.createElement('div');//переменная в которую записывается создание корневого элемента div
+    const rootContainer = document.createElement('div');
     rootContainer.setAttribute('id', id);
     return rootContainer;
 }

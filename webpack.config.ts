@@ -85,6 +85,7 @@ export default (env: Environment, argv: { mode: string }): Configuration => {
         },
         plugins: [
             new HtmlWebpackPlugin({
+                filename:'index.html',
                 template: './public/index.html'
             }),
             new MiniCssExtractPlugin(),

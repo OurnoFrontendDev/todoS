@@ -64,7 +64,7 @@ export type typesForTodosActionCreator =
     | AddTodolistActionType
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
-    | initialTodoListType
+    | InitialTodoListType
 
 export type RemoveTodolistActionType = {
     type: typeof REMOVE_TODOLIST,
@@ -88,7 +88,7 @@ export type ChangeTodolistFilterActionType = {
     filter: FilterValuesType
 }
 
-export type initialTodoListType = {
+export type InitialTodoListType = {
     type: typeof INIT_TODO_LIST
     payload: TodolistType[]
 }
@@ -99,9 +99,9 @@ export type TodolistType = {
 };
 
 export type CounterType = {
-    addedNow?: number;
-    addedTotal?: number;
-    deletedTotal?: number;
+    addedNow: number;
+    addedTotal: number;
+    deletedTotal: number;
 };
 
 export type TasksStateType = {

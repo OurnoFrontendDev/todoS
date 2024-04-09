@@ -32,8 +32,6 @@ export function TodolistItems(props: TodolistItems) {
 
     const dispatch = useDispatch();
     const tasks = useAppSelector(state => state.tasks.todos[todolistId]);
-    console.log(tasks)
-    console.log(todolistId)
     const [titleTasks, setTitleTasks] = useState("")
 
     const handleAddTask = (titleTasks: string) => {
@@ -44,8 +42,8 @@ export function TodolistItems(props: TodolistItems) {
         removeTodolist(todolistId);
     };
 
-    const handleChangeTodoListTitle = (titleTasks: string) => {
-        changeTodolistTitle(todolistId, titleTasks);
+    const handleChangeTodoListTitle = (listTitle: string) => {
+        changeTodolistTitle(todolistId, listTitle);
     };
 
     const handleRemoveTask = (taskId: string) => () => {
@@ -60,7 +58,7 @@ export function TodolistItems(props: TodolistItems) {
         dispatch(changeTaskTitle(taskId, newValue, todolistId));
     }
 
-    const filterTasksForTodolist = useMemo(() => {
+    const handleFilterTasksForTodolist = useMemo(() => {
         let filteredTasks = tasks;
         if (filterTasksStatus === 'active') {
             filteredTasks = tasks.filter(t => !t.isDone);
@@ -73,23 +71,23 @@ export function TodolistItems(props: TodolistItems) {
     return (
         <div className={style.container}>
             <div className={style.todoItemHeader}>
-                <div className={style.todolistsItemsIcons}>
+                <div className={style.todoListsItemsHeader}>
                     <InputTaskOrTodoListEditing valueTitleTodoOrTask={todoTitleValue}
                                                 handleOnChangeTitleTodoOrTasks={handleChangeTodoListTitle}/>
-                    <Button onClick={handeRemoveTodolist} buttonSize={'small'} buttonVariant={'icons'}>
+                    <Button onClick={handeRemoveTodolist} size={'small'} variant={'icons'}>
                         <Icon Svg={DeletingTodoOrTaskIcon} width={18} height={18}/>
                     </Button>
                 </div>
             </div>
             <div>
                 <TodosListHeaderControls addTodoOrTodoList={handleAddTask} buttonSize={'small'}
-                                         inputPlaceholder={'Write your task'} buttonVariant={'secondary'}
-                                         titleValueAddItemTodoOrTasks={titleTasks}
-                                         setTitleValueAddItemTodoOrTasks={setTitleTasks}
-                                         inputSizeAddTodoOrTask={"small"}/>
+                                         placeholderAddingTaskOrTodo={'Write your task'} buttonVariant={'secondary'}
+                                         titleAddItemTodoOrTasks={titleTasks}
+                                         setTitleAddItemTodoOrTasks={setTitleTasks}
+                                         inputAddingTaskOrTodo={"small"}/>
             </div>
             <div className={style.todolistsItems}>
-                {filterTasksForTodolist.map(task => {
+                {handleFilterTasksForTodolist.map(task => {
                     const taskClassName = classNames(
                         style.tasksContainer,
                         {
@@ -98,8 +96,8 @@ export function TodolistItems(props: TodolistItems) {
                     );
                     return (
                         <div key={task.id} className={taskClassName}>
-                            <Task checked={task.isDone} handleTaskCheckboxOnChange={handleSwitchingTaskStatus(task.id)}
-                                  valueTitleTodoOrTask={task.title}
+                            <Task  handleTaskCheckboxOnChange={handleSwitchingTaskStatus(task.id)}
+                                   {...task}
                                   handleChangeTaskTitle={handleChangeTaskTitle(task.id)}
                                   handleRemoveTask={handleRemoveTask(task.id)}/>
                         </div>

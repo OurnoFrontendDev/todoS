@@ -36,7 +36,7 @@ export const InputTaskOrTodoListEditing: React.FC<EditableSpanProps> = (props) =
                 : <span onDoubleClick={handleToggleEdit}
                         className={style.container}>{valueTitleTodoOrTask}</span>
             }
-            <Button onClick={handleSetIsActivationEditingMode} buttonSize={"small"} buttonVariant={"icons"}>
+            <Button onClick={handleSetIsActivationEditingMode} size={"small"} variant={"icons"}>
                 <Icon Svg={PencilEditTodoOrTaskIcon} width={15} height={15}/>
             </Button>
         </>
