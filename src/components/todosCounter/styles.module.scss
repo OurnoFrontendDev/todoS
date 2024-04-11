@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  right: 0;
+  top: 20px;
+  position: absolute;
+  border: 0.5px solid #6C63FF;
+  border-radius: 20px;
+  left: -500px;
+
+  &.visible {
+    left: 10px;
+    transition: left 0.5s ease;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  margin: 5px 10px 0 10px;
+}
+
+.counterItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 1px dotted #6C63FF;
+  margin-left: 10px;
+}
+

@@ -1,0 +1,52 @@
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  pointer-events: none;
+
+  &_content {
+    padding: 20px;
+    border-radius: 12px;
+    height: 278px;
+    width: 512px;
+    display: flex;
+    margin-bottom: 358px;
+    flex-direction: column;
+    background-color: var(--bg-light);
+    margin-right: 19px;
+
+    & .modalFooter {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    & .contentInner {
+      flex-grow: 1;
+    }
+
+    & .text__clue__container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+
+      & .text__clue {
+        color: black;
+        font-size: 26px;
+      }
+    }
+  }
+
+  &.active {
+    transform: scale(1);
+    pointer-events: all;
+  }
+
+}

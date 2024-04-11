@@ -1,0 +1,59 @@
+.container {
+  width: 1000px;
+  height: 710px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 44px;
+}
+
+.textContainerTodoList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+
+  .text {
+    font-weight: bold;
+    font-size: 30px;
+    width: 120px;
+    height: 34px;
+    margin-bottom: 30px;
+    margin-left: 71px;
+    margin-top: 32px;
+  }
+}
+
+.header {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 69px;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: row;
+}
+
+.todoContainer {
+  width: 798px;
+  height: 700px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-right: 70px;
+}
+
+.addTodoListButton{
+  position: fixed;
+  width: 49px;
+  height: 50px;
+  border-radius: 29px;
+  bottom: 347px;
+  right: 700px;
+}
