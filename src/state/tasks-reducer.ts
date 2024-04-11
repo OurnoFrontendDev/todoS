@@ -1,19 +1,18 @@
 import {v1} from 'uuid';
-import {TasksStateType, TaskType, typesForTasksActionCreator} from "../types/actionType/types";
+import {TasksStateType, TaskType, TypesTasksActionCreator} from "../types/actionType/types";
 
 export const initialState: TasksStateType = {
     todos: {},
     addedNow: 0,
-    addedTotal: Number(localStorage.getItem("addedTotalTasks")),
-    deletedTotal: Number(localStorage.getItem("deletedTotalTasks"))
+    addedTasksTotal: Number(localStorage.getItem("addedTotalTasks")),
+    deletedTasksTotal: Number(localStorage.getItem("deletedTotalTasks"))
 };
 
-export const tasksReducer = (state: TasksStateType = initialState, action: typesForTasksActionCreator): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialState, action: TypesTasksActionCreator): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             const updatedTodos = state.todos[action.todolistId].filter(el => el.id !== action.taskId);
-            const updatedDeleteTotal = state.deletedTotal ? state.deletedTotal + 1 : 1;
-            localStorage.setItem('deletedTotalTasks', JSON.stringify(updatedDeleteTotal));
+
             return {
                 ...state,
                 todos: {
@@ -21,19 +20,19 @@ export const tasksReducer = (state: TasksStateType = initialState, action: types
                     [action.todolistId]: updatedTodos,
                 },
 
-                deletedTotal: state.deletedTotal ? state.deletedTotal + 1 : 1,
+                deletedTasksTotal: state.deletedTasksTotal ? state.deletedTasksTotal + 1 : 1,
                 addedNow: state.addedNow ? state.addedNow - 1 : 0
             };
         }
         case 'ADD-TASKS': {
             const newTask: TaskType = {id: v1(), title: action.title, isDone: false}
-            const updatedAddedTotal = state.addedTotal ? state.addedTotal + 1 : 1;
+            const updatedAddedTotal = state.addedTasksTotal ? state.addedTasksTotal + 1 : 1;
             localStorage.setItem('addedTotalTasks', JSON.stringify(updatedAddedTotal));
             return {
                 ...state,
                 todos: {...state.todos, [action.todolistId]: [...state.todos[action.todolistId], newTask]},
                 addedNow: state.addedNow ? state.addedNow + 1 : 1,
-                addedTotal: state.addedTotal ? state.addedTotal + 1 : 1,
+                addedTasksTotal: state.addedTasksTotal ? state.addedTasksTotal + 1 : 1,
             };
         }
         case 'CHANGE-TASK-STATUS': {
@@ -83,16 +82,16 @@ export const tasksReducer = (state: TasksStateType = initialState, action: types
             return {
                 ...newState,
                 addedNow: 0,
-                addedTotal: 0,
-                deletedTotal: state.deletedTotal ? state.deletedTotal + 1 : 1,
+                addedTasksTotal: 0,
+                deletedTasksTotal: state.deletedTasksTotal ? state.deletedTasksTotal + 1 : 1,
             };
         }
         case "INIT-TASKS": {
             return {
                 todos: action.payload,
-                addedTotal: state.addedTotal,
+                addedTasksTotal: state.addedTasksTotal,
                 addedNow: state.addedNow,
-                deletedTotal: state.deletedTotal,
+                deletedTasksTotal: state.deletedTasksTotal,
             }
         }
         default:

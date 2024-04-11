@@ -7,8 +7,8 @@ import {deleteAllTasks} from "../../state/actions";
 
 type DeleteTasksToggleProps = {
     isStartShakeInputOrDeletingTasksToggle: (isShake: boolean) => void
-    setIsShowModalAddTask: (isShowModalAddTask: boolean) => void
-    setIsErrorShowingModalAddTodo: (isErrorShowingModalForAddTodo: boolean) => void
+    setIsShowModalAddTask: (isShow: boolean) => void
+    setIsErrorShowingModalAddTodo: (isError: boolean) => void
     inputTitleAddTaskOrTodo: string
 }
 export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
@@ -20,10 +20,11 @@ export const DeleteTasksToggle: React.FC<DeleteTasksToggleProps> = (props) => {
     } = props
     const dispatch = useDispatch()
     const tasks = useAppSelector(state => state.tasks.todos)
-    const deletedTotal = useAppSelector((state) => state.tasks.deletedTotal);
+    const deletedTotal = useAppSelector((state) => state.tasks.deletedTasksTotal);
 
     const [isChecked, setIsChecked] = useState(false);
     const [isShake, setIsShake] = useState(false)
+
     const handleDeleteTasks = () => {
         const isEmptyTasks = Object.keys(tasks).length === 0
         if (isEmptyTasks) {

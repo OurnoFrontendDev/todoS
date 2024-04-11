@@ -60,15 +60,18 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
             setIsModalVisibleAddTask?.(true)
         }
     }
+
     const handleStartShaking = () => {
         setIsStartShakingInputOrToggle?.(true);
         setTimeout(() => {
             setIsStartShakingInputOrToggle?.(false);
         }, 500);
     };
+
     const onChangeInputValueAddTodoOrTask = (e: ChangeEvent<HTMLInputElement>) => {
         setTitleAddItemTodoOrTasks(e.currentTarget.value)
     }
+
     const onKeyPressInputAddTodoOrTask = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             handleAddTodoOrTask();
@@ -91,12 +94,12 @@ export const TodosListHeaderControls: React.FC<TodosListHeaderControlsProps> = (
                                 onChange={onChangeInputValueAddTodoOrTask}
                                 onKeyDown={onKeyPressInputAddTodoOrTask}
                                 placeholder={placeholderAddingTaskOrTodo}
-                                inputSize={inputAddingTaskOrTodo}
+                                size={inputAddingTaskOrTodo}
             />
             {
                 withFilterSelectTaskStatus && (<FilterSelectTaskStatus onChange={handleChangeFilterTaskStatus}/>)
             }
-            <ModalAddTodo isActiveModalAddTodo={!!isModalVisibleAddTask}
+            <ModalAddTodo isActiveModalAddTodo={isModalVisibleAddTask}
                           setIsActiveModalAddTodo={setIsModalVisibleAddTask}
                           cancelText={"Apply"} okText={"Cancel"} handleAddTodo={addTodoOrTodoList}/>
             <Button onClick={handleAddTodoOrTask} size={buttonSize} className={buttonClassNameAddingTaskOrTodo} variant={buttonVariant}>

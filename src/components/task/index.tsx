@@ -6,16 +6,23 @@ import {Button} from "../button";
 import {Icon} from "../svg/SvgLoader";
 import DeletingTodoOrTaskIcon from "../../img/DeletingTodoOrTaskIcon.svg";
 import {TaskType} from "../../types/actionType/types";
+import classNames from "classnames";
 
 type TaskProps = {
     handleTaskCheckboxOnChange: (e: ChangeEvent<HTMLInputElement>) => void
     handleChangeTaskTitle: (newValue: string) => void
     handleRemoveTask: () => void
-}&TaskType
+} & TaskType
 export const Task: FC<TaskProps> = (props) => {
-    const {handleTaskCheckboxOnChange, handleChangeTaskTitle, handleRemoveTask , isDone,title} = props
+    const {handleTaskCheckboxOnChange, handleChangeTaskTitle, handleRemoveTask, isDone, title, id} = props
+    const taskClassName = classNames(
+        style.tasksContainer,
+        {
+            [style.completedTask]: isDone
+        }
+    );
     return (
-        <div >
+        <div key={id} className={taskClassName}>
             <Checkbox checked={isDone} onChange={handleTaskCheckboxOnChange}/>
             <div className={style.editTask}>
                 <InputTaskOrTodoListEditing valueTitleTodoOrTask={title}

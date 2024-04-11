@@ -18,6 +18,7 @@ export const ModalError: React.FC<ModalErrorProps> = (props) => {
         style.container,
         {[style.active]: isErrorModalActive}
     );
+
     const portalErrorModal = usePortal("ErrorModal");
     const handleStopPropagation = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation()
     return createPortal(

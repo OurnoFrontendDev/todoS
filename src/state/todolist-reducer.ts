@@ -1,7 +1,7 @@
-import {TodolistType, typesForTodosActionCreator} from "../types/actionType/types";
+import {TodolistType, TypesTodosActionCreator} from "../types/actionType/types";
 
 const initialState: Array<TodolistType> = []
-export const todolistReducer = (state: TodolistType[] = initialState, action: typesForTodosActionCreator): Array<TodolistType> => {
+export const todolistReducer = (state: TodolistType[] = initialState, action: TypesTodosActionCreator): Array<TodolistType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(todoList => todoList.id != action.id)
@@ -12,7 +12,6 @@ export const todolistReducer = (state: TodolistType[] = initialState, action: ty
                 title: action.title,
                 filter: 'all'
             }, ...state]
-
         }
         case 'CHANGE-TODOLIST-TITLE': {
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el)

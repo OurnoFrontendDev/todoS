@@ -51,7 +51,7 @@ export const ModalAddTodo: React.FC<ModalAddTodoProps> = (props) => {
                     </div>
                     <InputAddTaskOrTodo onChange={handleInputChange}
                                         value={titleValueTodo}
-                                        placeholder={"Input your note..."} inputSize={"extraLarge"}/>
+                                        placeholder={"Input your note..."} size={"extraLarge"}/>
                 </div>
                 <div className={style.modalFooter}>
                     <Button onClick={handleIsActiveModalAddTodo} size={"extraLarge"}>

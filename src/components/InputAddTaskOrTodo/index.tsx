@@ -9,33 +9,20 @@ type InputProps = {
     onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
     placeholder?: string
     className?: string
-    inputSize: InputSize
+    size: InputSize
 }
 
 export const InputAddTaskOrTodo: React.FC<InputProps> = (props) => {
-    const {
-        value,
-        onChange,
-        onKeyDown,
-        placeholder,
-        className,
-        inputSize
-    } = props
-    const inputSizeToClassNameMap: Record<InputProps["inputSize"], string> = {
+    const { size, className, ...restProps } = props;
+
+    const inputSizeToClassNameMap: Record<InputProps["size"], string> = {
         extraLarge: style.container__extraLarge,
         large: style.container__large,
         small: style.container__small
     }
-    const classNameInput = classNames(className, style.container, inputSizeToClassNameMap[inputSize])
+    const classNameInput = classNames(className, style.container, inputSizeToClassNameMap[size])
     return (
-        <input
-            type="text"
-            value={value}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            placeholder={placeholder}
-            className={classNameInput}
-        />
+        <input {...restProps} className={classNameInput} />
     );
 };
 

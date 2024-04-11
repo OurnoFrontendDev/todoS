@@ -14,34 +14,34 @@ export type TaskType = {
     isDone: boolean;
 }
 
-export type typesForTasksActionCreator =
-    removeTaskActionCreatorType
-    | addTasksActionCreatorType
-    | changeTaskStatusActionCreatorType
+export type TypesTasksActionCreator =
+    RemoveTaskActionCreatorType
+    | AddTasksActionCreatorType
+    | ChangeTaskStatusActionCreatorType
     | DeleteAllTasksActionCreatorType
-    | changeTaskTitleActionCreatorType
-    | initialTasksType
+    | ChangeTaskTitleActionCreatorType
+    | InitialTasksType
     | RemoveTodolistActionType
     | AddTodolistActionType
 
-export type initialTasksType = {
+export type InitialTasksType = {
     type: typeof INIT_TASKS
     payload: { todos: TaskType[]; }
 }
 
-export type addTasksActionCreatorType = {
+export type AddTasksActionCreatorType = {
     type: typeof ADD_TASKS
     title: string
     todolistId: string
 }
 
-export type removeTaskActionCreatorType = {
+export type RemoveTaskActionCreatorType = {
     type: typeof REMOVE_TASKS
     taskId: string
     todolistId: string
 }
 
-export type changeTaskStatusActionCreatorType = {
+export type ChangeTaskStatusActionCreatorType = {
     type: typeof CHANGE_TASK_STATUS
     taskId: string
     isDone: boolean
@@ -52,14 +52,14 @@ export type DeleteAllTasksActionCreatorType = {
     type: typeof DELETE_ALL_TASKS
 }
 
-export type  changeTaskTitleActionCreatorType = {
+export type  ChangeTaskTitleActionCreatorType = {
     type: typeof CHANGE_TASK_TITLE
     taskId: string
     title: string
     todolistId: string
 }
 
-export type typesForTodosActionCreator =
+export type TypesTodosActionCreator =
     RemoveTodolistActionType
     | AddTodolistActionType
     | ChangeTodolistTitleActionType
@@ -100,8 +100,8 @@ export type TodolistType = {
 
 export type CounterType = {
     addedNow: number;
-    addedTotal: number;
-    deletedTotal: number;
+    addedTasksTotal: number;
+    deletedTasksTotal: number;
 };
 
 export type TasksStateType = {

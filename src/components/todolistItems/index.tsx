@@ -8,7 +8,6 @@ import {InputTaskOrTodoListEditing} from "../InputTaskOrTodoListEditing";
 import {Button} from "../button";
 import {TodosListHeaderControls} from "../todosListHeaderControls";
 import {FilterValuesType} from "../FilterSelectTaskStatus";
-import classNames from "classnames";
 import {addTask, changeTaskStatus, changeTaskTitle, removeTask} from "../../state/actions";
 import {Task} from "../task";
 
@@ -32,6 +31,7 @@ export function TodolistItems(props: TodolistItems) {
 
     const dispatch = useDispatch();
     const tasks = useAppSelector(state => state.tasks.todos[todolistId]);
+
     const [titleTasks, setTitleTasks] = useState("")
 
     const handleAddTask = (titleTasks: string) => {
@@ -88,16 +88,11 @@ export function TodolistItems(props: TodolistItems) {
             </div>
             <div className={style.todolistsItems}>
                 {handleFilterTasksForTodolist.map(task => {
-                    const taskClassName = classNames(
-                        style.tasksContainer,
-                        {
-                            [style.completedTask]: task.isDone
-                        }
-                    );
+
                     return (
-                        <div key={task.id} className={taskClassName}>
-                            <Task  handleTaskCheckboxOnChange={handleSwitchingTaskStatus(task.id)}
-                                   {...task}
+                        <div>
+                            <Task handleTaskCheckboxOnChange={handleSwitchingTaskStatus(task.id)}
+                                  {...task}
                                   handleChangeTaskTitle={handleChangeTaskTitle(task.id)}
                                   handleRemoveTask={handleRemoveTask(task.id)}/>
                         </div>

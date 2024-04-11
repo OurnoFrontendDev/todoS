@@ -4,7 +4,6 @@
   justify-content: flex-start;
   margin-left: 15px;
   gap: 16px;
-  font-weight: normal;
   height: 34px;
   border-radius: 5px;
   border-width: 1px;
@@ -19,13 +18,11 @@
 
   &__large {
     width: 590px;
-    font-weight: normal;
   }
 
   &__extraLarge {
     width: 440px;
     margin: 24px 30px 29px 30px;
-    font-weight: normal;
   }
 
   &::placeholder {
